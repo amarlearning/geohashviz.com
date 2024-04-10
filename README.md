@@ -1,6 +1,6 @@
 # GeohashViz.com
 
-GeohashViz.com is a web application that allows users to visualize geohashes on a map in bulk.
+GeohashViz.com is a web application that let you visualize geohashes in bulk
 
 ## Features
 
@@ -26,14 +26,14 @@ GeohashViz.com is a web application that allows users to visualize geohashes on 
 
 ## Issues
 
-You can report the bugs at the issue tracker
+You can report the bugs at the [issue tracker](https://github.com/amarlearning/geohashviz.com/issues)
 
-OR
+**OR**
 
-You can tweet me if you can't get it to work. In fact, you should tweet me anyway.
+You can [tweet me](https://twitter.com/iamarpandey) if you can't get it to work. In fact, you should tweet me anyway.
 
 ## License
 
-Built with ♥ by Amar Prakash Pandey(@amarlearning) under MIT License
+Built with ♥ by Amar Prakash Pandey([@amarlearning](http://github.com/amarlearning)) under [MIT License](http://amarlearning.mit-license.org/)
 
 You can find a copy of the License at http://amarlearning.mit-license.org/
