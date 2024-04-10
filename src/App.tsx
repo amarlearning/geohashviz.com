@@ -1,16 +1,28 @@
 import "./App.css";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer } from "react-leaflet";
+import LeafletContainer from "./LeafletContainer/LeafletContainer";
+import Geohash from "./LeafletContainer/model/Geohash";
+import getBoundingBox from "./Algorithms/BoundingBox";
 
 function App() {
-  return (
-    <MapContainer center={[26.461624, 80.329236]} zoom={13}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-    </MapContainer>
-  );
+  const geohashes = ["gb", "st", "yw", "fu"];
+  const data = createGeohashObjects(geohashes);
+
+  return <LeafletContainer geohashes={data}></LeafletContainer>;
+}
+
+function createGeohashObjects(geohashes: string[]): Geohash[] {
+  return geohashes.map((geohash) => {
+    const boundingBox = getBoundingBox(geohash);
+    const geohashObj: Geohash = {
+      boundingBox: [
+        [boundingBox.sw.lat, boundingBox.sw.lon],
+        [boundingBox.ne.lat, boundingBox.ne.lon],
+      ],
+      geohash,
+    };
+    return geohashObj;
+  });
 }
 
 export default App;
