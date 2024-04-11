@@ -53,17 +53,20 @@ export function getBoundingBox(geohash: string): {
 }
 
 function createGeohashObjects(geohashes: string[]): Geohash[] {
-  return geohashes.map((geohash) => {
-    const boundingBox = getBoundingBox(geohash);
-    const geohashObj: Geohash = {
-      boundingBox: [
-        [boundingBox.sw.lat, boundingBox.sw.lon],
-        [boundingBox.ne.lat, boundingBox.ne.lon],
-      ],
-      geohash,
-    };
-    return geohashObj;
-  });
+  return geohashes.reduce((acc: Geohash[], geohash: string) => {
+    try {
+      const boundingBox = getBoundingBox(geohash);
+      const geohashObj: Geohash = {
+        boundingBox: [
+          [boundingBox.sw.lat, boundingBox.sw.lon],
+          [boundingBox.ne.lat, boundingBox.ne.lon],
+        ],
+        geohash,
+      };
+      acc.push(geohashObj);
+    } catch (error) {}
+    return acc;
+  }, []);
 }
 
 export default createGeohashObjects;
