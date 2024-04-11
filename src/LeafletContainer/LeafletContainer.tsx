@@ -30,8 +30,11 @@ const LeafletContainer: React.FC<{ geohashes: Geohash[] }> = ({
           bounds={geohash.boundingBox}
           color={BOUNDING_BOX_COLOR}
           opacity={BOUNDING_BOX_OPACITY}
+          weight={1}
         >
-          <Tooltip permanent>{geohash.geohash}</Tooltip>
+          <Tooltip permanent direction={"top"}>
+            {geohash.geohash}
+          </Tooltip>
         </Rectangle>
       ))}
     </MapContainer>

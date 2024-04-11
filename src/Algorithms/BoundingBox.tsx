@@ -1,3 +1,5 @@
+import Geohash from "../LeafletContainer/model/Geohash";
+
 const base32 = "0123456789bcdefghjkmnpqrstuvwxyz"; // (geohash-specific) Base32 map
 
 function getBoundingBox(geohash: string): {
@@ -50,4 +52,18 @@ function getBoundingBox(geohash: string): {
   return bounds;
 }
 
-export default getBoundingBox;
+function createGeohashObjects(geohashes: string[]): Geohash[] {
+  return geohashes.map((geohash) => {
+    const boundingBox = getBoundingBox(geohash);
+    const geohashObj: Geohash = {
+      boundingBox: [
+        [boundingBox.sw.lat, boundingBox.sw.lon],
+        [boundingBox.ne.lat, boundingBox.ne.lon],
+      ],
+      geohash,
+    };
+    return geohashObj;
+  });
+}
+
+export default createGeohashObjects;
