@@ -10,6 +10,10 @@ import {
   MIN_ZOOM_LEVEL,
 } from "./Constants";
 
+function generateKey(geohash: string, polygon: string) {
+  return `${geohash}-polygon-${(Math.random() + 1).toString(36).substring(10)}`;
+}
+
 const LeafletContainer: React.FC<{ geohashes: Geohash[] }> = ({
   geohashes,
 }) => {
@@ -31,10 +35,10 @@ const LeafletContainer: React.FC<{ geohashes: Geohash[] }> = ({
           color={BOUNDING_BOX_COLOR}
           opacity={BOUNDING_BOX_OPACITY}
           weight={1}
-          key={geohash.geohash + "-rectangle"}
+          key={generateKey(geohash.geohash, "rectangle")}
         >
           <Tooltip
-            key={geohash.geohash + "-tooltip"}
+            key={generateKey(geohash.geohash, "tooltip")}
             permanent
             direction={"top"}
           >
