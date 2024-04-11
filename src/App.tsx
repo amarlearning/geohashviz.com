@@ -17,7 +17,7 @@ function handleSubmit(value: string): Geohash[] {
 }
 
 function App() {
-  const defaultGeohashStr = "st\ngb";
+  const defaultGeohashStr = "tt\ntg";
   const [value, setValue] = useState(defaultGeohashStr);
   const [geohashes, setGeohashes] = useState(
     handleSubmit(defaultGeohashStr) as Geohash[]
