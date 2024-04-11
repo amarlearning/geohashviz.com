@@ -2,7 +2,7 @@ import Geohash from "../LeafletContainer/model/Geohash";
 
 const base32 = "0123456789bcdefghjkmnpqrstuvwxyz"; // (geohash-specific) Base32 map
 
-function getBoundingBox(geohash: string): {
+export function getBoundingBox(geohash: string): {
   sw: { lat: number; lon: number };
   ne: { lat: number; lon: number };
 } {
