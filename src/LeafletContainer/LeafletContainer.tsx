@@ -23,6 +23,7 @@ const LeafletContainer: React.FC<{ geohashes: Geohash[] }> = ({
       zoom={DEFAULT_ZOOM_LEVEL}
       minZoom={MIN_ZOOM_LEVEL}
       maxBounds={MAX_BOUNDS}
+      
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
