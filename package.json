@@ -1,8 +1,11 @@
 {
   "name": "geohashviz.com",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "homepage": "https://geohashviz.com",
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "@mui/material": "^5.15.15",
     "@testing-library/jest-dom": "^5.17.0",

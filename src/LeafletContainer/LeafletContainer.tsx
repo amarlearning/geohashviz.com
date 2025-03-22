@@ -1,52 +1,40 @@
 import React from "react";
-import { MapContainer, TileLayer, Rectangle, Tooltip } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import Geohash from "./model/Geohash";
 import {
-  BOUNDING_BOX_COLOR,
-  BOUNDING_BOX_OPACITY,
   DEFAULT_CENTER,
   DEFAULT_ZOOM_LEVEL,
   MAX_BOUNDS,
   MIN_ZOOM_LEVEL,
-} from "./Constants";
+} from "./config/mapConfig";
+import BoundsFitter from "./components/BoundsFitter";
+import GeohashRectangles from "./components/GeohashRectangles";
 
-function generateKey(geohash: string, polygon: string) {
-  return `${geohash}-polygon-${(Math.random() + 1).toString(36).substring(10)}`;
+interface LeafletContainerProps {
+  geohashes: Geohash[];
 }
 
-const LeafletContainer: React.FC<{ geohashes: Geohash[] }> = ({
-  geohashes,
-}) => {
+/**
+ * Main map container component that displays geohashes on a Google Maps layer
+ * Handles map initialization and contains child components for bounds fitting
+ * and geohash visualization
+ */
+const LeafletContainer: React.FC<LeafletContainerProps> = ({ geohashes }) => {
   return (
     <MapContainer
       center={DEFAULT_CENTER}
       zoom={DEFAULT_ZOOM_LEVEL}
       minZoom={MIN_ZOOM_LEVEL}
       maxBounds={MAX_BOUNDS}
-      
+      className="map-container"
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='Map data ©2024 Google'
+        url="https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}"
+        className="map-tiles"
       />
-
-      {geohashes.map((geohash) => (
-        <Rectangle
-          bounds={geohash.boundingBox}
-          color={BOUNDING_BOX_COLOR}
-          opacity={BOUNDING_BOX_OPACITY}
-          weight={1}
-          key={generateKey(geohash.geohash, "rectangle")}
-        >
-          <Tooltip
-            key={generateKey(geohash.geohash, "tooltip")}
-            permanent
-            direction={"top"}
-          >
-            {geohash.geohash}
-          </Tooltip>
-        </Rectangle>
-      ))}
+      <BoundsFitter geohashes={geohashes} />
+      <GeohashRectangles geohashes={geohashes} />
     </MapContainer>
   );
 };

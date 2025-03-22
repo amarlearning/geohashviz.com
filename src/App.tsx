@@ -4,7 +4,7 @@ import LeafletContainer from "./LeafletContainer/LeafletContainer";
 import Geohash from "./LeafletContainer/model/Geohash";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import createGeohashObjects from "./Algorithms/BoundingBox";
+import { createGeohashObjects } from "./Algorithms/geohash";
 import GeohashBulkInputForm from "./GeohashBulkInputForm/GeohashBulkInputForm";
 
 function handleSubmit(value: string): Geohash[] {
@@ -18,7 +18,7 @@ function handleSubmit(value: string): Geohash[] {
 }
 
 function App() {
-  const defaultGeohashStr = "tt\ntg";
+  const defaultGeohashStr = "gct\ngcp";
   const [geohashes, setGeohashes] = useState(
     handleSubmit(defaultGeohashStr) as Geohash[]
   );
