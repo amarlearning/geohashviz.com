@@ -1,36 +1,60 @@
 # GeohashViz.com
 
-GeohashViz.com is a web application that let you visualize geohashes in bulk
+A modern web application for visualizing multiple geohashes on an interactive map. Perfect for developers working with location-based data and geohashing algorithms.
 
 ## Features
 
-- Bulk geohash visualization
-- Interactive map display
+- 🗺️ Interactive map visualization
+- 📦 Bulk geohash processing
+- 🚀 Fast rendering with memoization
+- 📱 Responsive design
+- 🎯 Precise bounding box calculations
+- ⚡ Real-time visualization
+
+## Demo
+
+Visit [GeohashViz.com](https://geohashviz.com) to try it out!
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/amarlearning/geohashviz.com.git`
-2. Navigate to the project directory: `cd geohashviz.com`
-3. Install dependencies: `npm install`
+```bash
+# Clone the repository
+git clone https://github.com/amarlearning/geohashviz.com.git
 
-## Usage
+# Navigate to project directory
+cd geohashviz.com
 
-1. Open `GeohashViz.com` in your web browser.
-2. Enter a list of geohashes in the input field.
-3. Click the "Visualize" button to display the geohashes on the map.
+# Install dependencies
+npm install
 
-## Technologies Used
+# Start development server
+npm start
+```
 
-- React.dev
-- Leaflet.js (for map visualization)
+## Usage Guide
 
-## Issues
+1. Visit GeohashViz.com in your browser
+2. Enter geohashes in the input field (one per line or comma-separated)
+3. Click "Visualize" to see them on the map
+4. The map will automatically zoom to fit all geohashes
 
-You can report the bugs at the [issue tracker](https://github.com/amarlearning/geohashviz.com/issues)
+## Tech Stack
 
-**OR**
+- **Frontend**: React.js with TypeScript
+- **Map**: Leaflet.js
+- **Styling**: CSS Modules
+- **Package Manager**: npm
 
-You can [tweet me](https://twitter.com/iamarpandey) if you can't get it to work. In fact, you should tweet me anyway.
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+## Bug Reports
+
+Found a bug? Have a suggestion? Feel free to:
+
+- [Open an issue](https://github.com/amarlearning/geohashviz.com/issues)
+- [Tweet me](https://twitter.com/iamarpandey)
 
 ## License
 
