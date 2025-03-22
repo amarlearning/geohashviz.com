@@ -29,7 +29,7 @@ const LeafletContainer: React.FC<LeafletContainerProps> = ({ geohashes }) => {
       className="map-container"
     >
       <TileLayer
-        attribution='Map data ©2024 Google'
+        attribution="Map data ©2024 Google"
         url="https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}"
         className="map-tiles"
       />

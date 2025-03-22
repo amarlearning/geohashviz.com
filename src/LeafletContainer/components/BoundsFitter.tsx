@@ -9,14 +9,14 @@ const BoundsFitter: React.FC<{ geohashes: Geohash[] }> = ({ geohashes }) => {
   useEffect(() => {
     if (geohashes.length > 0) {
       const bounds = new LatLngBounds(geohashes[0].boundingBox);
-      geohashes.forEach(geohash => {
+      geohashes.forEach((geohash) => {
         bounds.extend(geohash.boundingBox[0]);
         bounds.extend(geohash.boundingBox[1]);
       });
 
       map.fitBounds(bounds, {
         padding: [50, 50],
-        maxZoom: 15
+        maxZoom: 15,
       });
     }
   }, [map, geohashes]);
@@ -24,4 +24,4 @@ const BoundsFitter: React.FC<{ geohashes: Geohash[] }> = ({ geohashes }) => {
   return null;
 };
 
-export default BoundsFitter; 
+export default BoundsFitter;

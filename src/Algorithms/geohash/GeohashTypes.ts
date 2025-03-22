@@ -8,4 +8,4 @@ interface GeohashBounds {
   ne: GeoPoint;
 }
 
-export type { GeoPoint, GeohashBounds }; 
+export type { GeoPoint, GeohashBounds };

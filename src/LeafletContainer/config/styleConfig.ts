@@ -4,8 +4,8 @@
 export const COLORS = {
   PURPLE: {
     MAIN: "#9C27B0",
-    DARK: "#7B1FA2"
-  }
+    DARK: "#7B1FA2",
+  },
 } as const;
 
 /**
@@ -27,4 +27,4 @@ export const GEOHASH_STYLE = {
 
 // Export individual constants for backward compatibility
 export const BOUNDING_BOX_COLOR = GEOHASH_STYLE.BOUNDING_BOX_COLOR;
-export const BOUNDING_BOX_OPACITY = GEOHASH_STYLE.BOUNDING_BOX_OPACITY; 
+export const BOUNDING_BOX_OPACITY = GEOHASH_STYLE.BOUNDING_BOX_OPACITY;

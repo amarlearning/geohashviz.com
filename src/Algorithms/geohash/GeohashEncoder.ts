@@ -1,4 +1,4 @@
-import { GeohashError } from './GeohashError';
+import { GeohashError } from "./GeohashError";
 
 const BASE32_CHARS = "0123456789bcdefghjkmnpqrstuvwxyz" as const;
 
@@ -11,4 +11,4 @@ function validateGeohash(geohash: string): void {
   }
 }
 
-export { BASE32_CHARS, validateGeohash }; 
+export { BASE32_CHARS, validateGeohash };
