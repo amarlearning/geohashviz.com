@@ -1,6 +1,7 @@
 {
   "short_name": "GeohashViz",
-  "name": "Application that allows users to visualize geohashes on a map in bulk",
+  "name": "GeohashViz - Bulk Geohash Visualization Tool",
+  "description": "Visualize multiple geohashes on an interactive map. Perfect for developers working with location-based data.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,7 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#2c3e50",
+  "background_color": "#ffffff",
+  "categories": ["developer tools", "maps", "geospatial"]
 }

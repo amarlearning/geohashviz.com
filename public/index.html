@@ -4,49 +4,47 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#2c3e50" />
     <meta
       name="description"
-      content="Web Application that allows users to visualize geohashes on a map in bulk"
+      content="Visualize multiple geohashes on an interactive map. Perfect for developers working with location-based data and geohashing algorithms."
     />
     <meta
       name="keywords"
-      content="geohash, visualization, map, web application, geospatial, data visualization, react"
+      content="geohash, visualization, map, web application, geospatial, data visualization, react, leaflet"
     />
     <meta name="author" content="Amar Prakash Pandey (@amarlearning)" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://geohashviz.com/" />
+    <meta property="og:title" content="GeohashViz - Bulk Geohash Visualization Tool" />
+    <meta property="og:description" content="Visualize multiple geohashes on an interactive map. Perfect for developers working with location-based data." />
+    <meta property="og:image" content="%PUBLIC_URL%/social-share.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://geohashviz.com/" />
+    <meta property="twitter:title" content="GeohashViz - Bulk Geohash Visualization Tool" />
+    <meta property="twitter:description" content="Visualize multiple geohashes on an interactive map. Perfect for developers working with location-based data." />
+    <meta property="twitter:image" content="%PUBLIC_URL%/social-share.png" />
+
+    <link rel="canonical" href="https://geohashviz.com/" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>GeohashViz</title>
-  </head>
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-X6B37FTG4Y"
-  ></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
+    <title>GeohashViz - Bulk Geohash Visualization Tool</title>
 
-    gtag("config", "G-X6B37FTG4Y");
-  </script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X6B37FTG4Y"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-X6B37FTG4Y');
+    </script>
+  </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
-  <!-- Google tag (gtag.js) -->
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-X6B37FTG4Y"
-  ></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-
-    gtag("config", "G-X6B37FTG4Y");
-  </script>
 </html>
