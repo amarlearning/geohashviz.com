@@ -1,39 +1,49 @@
 import "./App.css";
 import "leaflet/dist/leaflet.css";
-import LeafletContainer from "./GeohashMap/GeohashMap";
-import Geohash from "./GeohashMap/model/Geohash";
-import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { createGeohashObjects } from "./Algorithms/geohash";
-import GeohashBulkInputForm from "./GeohashInput/GeohashInput";
-import InfoButton from "./InfoButton/InfoButton";
+import { useState } from "react";
 
-function handleSubmit(value: string): Geohash[] {
-  var g: string[] = [];
-  value.split("\n").forEach((geohash) => {
-    if (geohash.length > 0 && geohash.length <= 12) {
-      g.push(geohash);
-    }
-  });
-  return createGeohashObjects(g);
-}
+import GeohashMap from "./GeohashMap/GeohashMap";
+import Geohash from "./GeohashMap/model/Geohash";
+import { createGeohashObjects } from "./Algorithms/geohash";
+import GeohashInput from "./GeohashInput/GeohashInput";
+import InfoButton from "./InfoButton/InfoButton";
 
 function App() {
   const defaultGeohashStr = "gct\ngcp";
+  
+  // Validate geohash strings
+  const validateGeohashes = (input: string): string[] => {
+    const validGeohashes: string[] = [];
+    
+    input.split("\n").forEach((geohash) => {
+      const trimmedGeohash = geohash.trim();
+      if (trimmedGeohash.length > 0 && trimmedGeohash.length <= 12) {
+        validGeohashes.push(trimmedGeohash);
+      }
+    });
+    
+    return validGeohashes;
+  };
+  
+  // Process geohash input and convert to Geohash objects
+  const handleSubmit = (value: string): Geohash[] => {
+    const validGeohashes = validateGeohashes(value);
+    return createGeohashObjects(validGeohashes);
+  };
+  
   const [geohashes, setGeohashes] = useState(
-    handleSubmit(defaultGeohashStr) as Geohash[]
+    handleSubmit(defaultGeohashStr)
   );
 
   return (
     <div className="app-container">
       <InfoButton />
-      <GeohashBulkInputForm
-        onSubmit={(value) => {
-          setGeohashes(handleSubmit(value));
-        }}
+      <GeohashInput
+        onSubmit={(value) => setGeohashes(handleSubmit(value))}
         defaultGeohashStr={defaultGeohashStr}
       />
-      <LeafletContainer geohashes={geohashes}></LeafletContainer>
+      <GeohashMap geohashes={geohashes} />
     </div>
   );
 }

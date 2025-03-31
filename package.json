@@ -28,7 +28,7 @@
   "scripts": {
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!your-module-name)/\"",
     "eject": "react-scripts eject"

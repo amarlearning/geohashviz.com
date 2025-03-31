@@ -19,7 +19,7 @@ interface LeafletContainerProps {
  * Handles map initialization and contains child components for bounds fitting
  * and geohash visualization
  */
-const LeafletContainer: React.FC<LeafletContainerProps> = ({ geohashes }) => {
+const GeohashMap: React.FC<LeafletContainerProps> = ({ geohashes }) => {
   return (
     <MapContainer
       center={DEFAULT_CENTER}
@@ -39,4 +39,4 @@ const LeafletContainer: React.FC<LeafletContainerProps> = ({ geohashes }) => {
   );
 };
 
-export default LeafletContainer;
+export default GeohashMap;

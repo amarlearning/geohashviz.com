@@ -7,7 +7,7 @@ interface FormComponentProps {
   defaultGeohashStr: string;
 }
 
-const GeohashBulkInputForm: React.FC<FormComponentProps> = ({
+const GeohashInput: React.FC<FormComponentProps> = ({
   onSubmit,
   defaultGeohashStr,
 }) => {
@@ -41,4 +41,4 @@ const GeohashBulkInputForm: React.FC<FormComponentProps> = ({
   );
 };
 
-export default GeohashBulkInputForm;
+export default GeohashInput;
