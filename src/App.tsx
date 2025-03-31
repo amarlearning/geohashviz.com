@@ -1,11 +1,11 @@
 import "./App.css";
 import "leaflet/dist/leaflet.css";
-import LeafletContainer from "./LeafletContainer/LeafletContainer";
-import Geohash from "./LeafletContainer/model/Geohash";
+import LeafletContainer from "./GeohashMap/GeohashMap";
+import Geohash from "./GeohashMap/model/Geohash";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { createGeohashObjects } from "./Algorithms/geohash";
-import GeohashBulkInputForm from "./GeohashBulkInputForm/GeohashBulkInputForm";
+import GeohashBulkInputForm from "./GeohashInput/GeohashInput";
 import InfoButton from "./InfoButton/InfoButton";
 
 function handleSubmit(value: string): Geohash[] {

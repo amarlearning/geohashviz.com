@@ -50,7 +50,7 @@ const InfoButton = () => {
             {show && (
                 <div className="info-popup">
                     <div className="info-popup-content">
-                        <h3>About GeohashViz.com</h3>
+                        <h3>GeohashViz.com</h3>
                         <p>A modern web application for visualizing multiple geohashes on an interactive map. Perfect for developers working with location-based data and geohashing algorithms.</p>
                         <h4>Features</h4>
                         <ul>

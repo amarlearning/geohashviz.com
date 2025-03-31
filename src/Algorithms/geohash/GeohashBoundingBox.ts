@@ -1,6 +1,6 @@
 import { GeoPoint, GeohashBounds } from "./GeohashTypes";
 import { BASE32_CHARS, validateGeohash } from "./GeohashEncoder";
-import Geohash from "../../LeafletContainer/model/Geohash";
+import Geohash from "../../GeohashMap/model/Geohash";
 import { GeohashError } from "./GeohashError";
 
 const memoizedBoundingBoxes = new Map<string, GeohashBounds>();

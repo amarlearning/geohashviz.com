@@ -1,6 +1,6 @@
 // FormComponent.tsx
 import React, { useState } from "react";
-import "./GeohashBulkInputForm.css";
+import "./GeohashInput.css";
 
 interface FormComponentProps {
   onSubmit: (value: string) => void;
