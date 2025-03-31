@@ -6,6 +6,7 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { createGeohashObjects } from "./Algorithms/geohash";
 import GeohashBulkInputForm from "./GeohashBulkInputForm/GeohashBulkInputForm";
+import InfoButton from "./InfoButton/InfoButton";
 
 function handleSubmit(value: string): Geohash[] {
   var g: string[] = [];
@@ -24,7 +25,8 @@ function App() {
   );
 
   return (
-    <div>
+    <div className="app-container">
+      <InfoButton />
       <GeohashBulkInputForm
         onSubmit={(value) => {
           setGeohashes(handleSubmit(value));
