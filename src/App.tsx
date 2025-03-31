@@ -1,7 +1,7 @@
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import GeohashMap from "./GeohashMap/GeohashMap";
 import Geohash from "./GeohashMap/model/Geohash";
@@ -10,7 +10,10 @@ import GeohashInput from "./GeohashInput/GeohashInput";
 import InfoButton from "./InfoButton/InfoButton";
 
 function App() {
-  const defaultGeohashStr = "gct\ngcp";
+  // Get geohashes from URL if present
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlGeohashes = urlParams.get('view');
+  const defaultGeohashStr = urlGeohashes ? urlGeohashes.split(',').join('\n') : "gct\ngcp";
   
   // Validate geohash strings
   const validateGeohashes = (input: string): string[] => {
@@ -35,6 +38,14 @@ function App() {
   const [geohashes, setGeohashes] = useState(
     handleSubmit(defaultGeohashStr)
   );
+
+  // Update URL when geohashes change
+  useEffect(() => {
+    if (geohashes.length > 0) {
+      const geohashStr = geohashes.map(g => g.geohash).join(',');
+      window.history.replaceState(null, '', `?view=${geohashStr}`);
+    }
+  }, [geohashes]);
 
   return (
     <div className="app-container">
