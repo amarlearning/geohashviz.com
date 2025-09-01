@@ -1,0 +1,44 @@
+.custom-zoom-controls {
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.zoom-btn {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: white;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+}
+
+.zoom-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background: rgba(99, 102, 241, 0.05);
+  transform: translateY(-1px);
+}
+
+.zoom-btn:active {
+  transform: translateY(0);
+}
+
+.zoom-fit {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+}
+
+.zoom-fit:hover {
+  background: linear-gradient(135deg, var(--primary-hover), #7c3aed);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}

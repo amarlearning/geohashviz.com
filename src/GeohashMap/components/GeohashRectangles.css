@@ -1,13 +1,29 @@
 .custom-tooltip {
-  background-color: #2c3e50;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   border: none;
   color: white;
-  font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  font-size: 0.875rem;
+  backdrop-filter: blur(10px);
 }
 
 .custom-tooltip:before {
-  border-top-color: #2c3e50;
+  border-top-color: var(--primary-color);
+}
+
+/* Enhanced geohash rectangle styling */
+.geohash-rectangle {
+  stroke-width: 2;
+  stroke-opacity: 0.8;
+  fill-opacity: 0.3;
+  transition: all 0.2s ease;
+}
+
+.geohash-rectangle:hover {
+  stroke-width: 3;
+  stroke-opacity: 1;
+  fill-opacity: 0.5;
 }

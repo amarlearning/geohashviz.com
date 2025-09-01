@@ -1,29 +1,33 @@
 .info-button-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
+    position: relative;
+    z-index: 1002;
 }
 
 .info-button {
     border: none;
-    border-radius: 50px;
-    padding: 5px 5px;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 600;
-    box-shadow: 0 4px 12px rgba(74, 107, 255, 0.3);
-    background-color: #9c27b0;
+    background: rgba(255, 255, 255, 0.2);
     color: white;
     font-size: 1rem;
     cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .info-button:hover {
-    background-color: #7b1fa2;
-    box-shadow: 0 6px 16px rgba(74, 107, 255, 0.4);
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
 }
 
 .info-button:active {
-    background-color: #7b1fa2;
+    transform: translateY(0);
 }
 
 .info-icon {
@@ -33,31 +37,45 @@
 
 .info-popup {
     position: fixed;
-    top: 80px;
-    right: 20px;
-    background: white;
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    max-width: 520px;
-    z-index: 1000;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    top: 65px;
+    right: 24px;
+    background: var(--background-overlay);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    box-shadow: var(--shadow-lg);
+    max-width: 380px;
+    min-width: 320px;
+    z-index: 1003;
+    border: 1px solid var(--border-color);
+    animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .info-popup-content h3 {
-    color: #9c27b0;
-    margin-bottom: 15px;
+    color: var(--primary-color);
+    margin-bottom: 16px;
     font-size: 1.5rem;
-    font-weight: 600;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 10px;
+    font-weight: 700;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 12px;
 }
 
 .info-popup-content h4 {
-    color: #7b1fa2;
-    margin: 18px 0 12px;
-    font-size: 1.2rem;
-    font-weight: 500;
+    color: var(--secondary-color);
+    margin: 20px 0 12px;
+    font-size: 1.125rem;
+    font-weight: 600;
 }
 
 .info-popup-content p {
@@ -75,6 +93,8 @@
 .info-popup-content li {
     margin-bottom: 8px;
     line-height: 1.4;
+    color: var(--text-primary);
+    font-size: 0.9rem;
 }
 
 
@@ -82,7 +102,43 @@
 .github-link-container {
     margin-top: 25px;
     padding-top: 18px;
-    border-top: 2px solid #f0f0f0;
+    border-top: 2px solid var(--border-color);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .info-button {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .info-popup {
+    top: 55px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+    min-width: auto;
+    padding: 18px;
+  }
+  
+  .github-star {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    gap: 6px;
+  }
+  
+  .info-popup-content h3 {
+    font-size: 1.25rem;
+  }
+  
+  .info-popup-content h4 {
+    font-size: 1rem;
+  }
+  
+  .info-popup-content p,
+  .info-popup-content li {
+    font-size: 0.875rem;
+  }
 }
 
 .github-link-container h4 {
@@ -93,20 +149,22 @@
 .github-star {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    background-color: #9c27b0;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white !important;
-    padding: 10px 18px;
+    padding: 10px 16px;
     border-radius: 8px;
     font-weight: 600;
+    font-size: 0.875rem;
     text-decoration: none !important;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(156, 39, 176, 0.3);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-md);
+    white-space: nowrap;
 }
 
 .github-star:hover {
-    background-color: #7b1fa2;
+    background: linear-gradient(135deg, var(--primary-hover), #7c3aed);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.4);
+    box-shadow: var(--shadow-lg);
     text-decoration: none !important;
 }

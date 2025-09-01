@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './InfoButton.css';
 
 const InfoIcon = () => (
-    <div style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '3em',
-        height: '3em',
-    }}>
-        <svg width="4em" height="2em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-        </svg>
-    </div>
+    <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+    </svg>
 );
 
 
 const InfoButton = () => {
     const [show, setShow] = useState(false);
 
-    const handleToggle = () => setShow(!show);
+    const handleToggle = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Info button clicked, current show state:', show);
+        setShow(!show);
+    };
     const handleClose = () => setShow(false);
 
     useEffect(() => {
@@ -43,9 +39,9 @@ const InfoButton = () => {
 
     return (
         <div className="info-button-container">
-            <Button onClick={handleToggle} className="info-button">
+            <button onClick={handleToggle} className="info-button">
                 <InfoIcon />
-            </Button>
+            </button>
 
             {show && (
                 <div className="info-popup">

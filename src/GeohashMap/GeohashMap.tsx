@@ -1,5 +1,6 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
+import { LatLngBounds } from "leaflet";
 import Geohash from "./model/Geohash";
 import {
   DEFAULT_CENTER,
@@ -14,12 +15,46 @@ interface LeafletContainerProps {
   geohashes: Geohash[];
 }
 
+export interface GeohashMapRef {
+  fitBounds: () => void;
+  zoomIn: () => void;
+  zoomOut: () => void;
+}
+
 /**
  * Main map container component that displays geohashes on a Google Maps layer
  * Handles map initialization and contains child components for bounds fitting
  * and geohash visualization
  */
-const GeohashMap: React.FC<LeafletContainerProps> = ({ geohashes }) => {
+const GeohashMap = forwardRef<GeohashMapRef, LeafletContainerProps>(({ geohashes }, ref) => {
+  const mapInstanceRef = useRef<any>(null);
+
+  useImperativeHandle(ref, () => ({
+    fitBounds: () => {
+      if (mapInstanceRef.current && geohashes.length > 0) {
+        const bounds = new LatLngBounds(geohashes[0].boundingBox);
+        geohashes.forEach((geohash) => {
+          bounds.extend(geohash.boundingBox[0]);
+          bounds.extend(geohash.boundingBox[1]);
+        });
+
+        mapInstanceRef.current.fitBounds(bounds, {
+          padding: [50, 50],
+          maxZoom: 15,
+        });
+      }
+    },
+    zoomIn: () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.zoomIn();
+      }
+    },
+    zoomOut: () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.zoomOut();
+      }
+    },
+  }));
   return (
     <MapContainer
       center={DEFAULT_CENTER}
@@ -27,6 +62,7 @@ const GeohashMap: React.FC<LeafletContainerProps> = ({ geohashes }) => {
       minZoom={MIN_ZOOM_LEVEL}
       maxBounds={MAX_BOUNDS}
       className="map-container"
+      ref={mapInstanceRef}
     >
       <TileLayer
         attribution="Map data ©2024 Google"
@@ -37,6 +73,6 @@ const GeohashMap: React.FC<LeafletContainerProps> = ({ geohashes }) => {
       <GeohashRectangles geohashes={geohashes} />
     </MapContainer>
   );
-};
+});
 
 export default GeohashMap;
