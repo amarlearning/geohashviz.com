@@ -6,6 +6,9 @@ export const COLORS = {
     MAIN: "#9C27B0",
     DARK: "#7B1FA2",
   },
+  GREEN: {
+    MAIN: "#10b981",
+  },
 } as const;
 
 /**
@@ -24,6 +27,12 @@ export const GEOHASH_STYLE = {
    */
   BOUNDING_BOX_OPACITY: 0.8,
 } as const;
+
+/**
+ * Color for reference geohash in distance analysis mode
+ * Using green to distinguish from regular geohashes
+ */
+export const REFERENCE_GEOHASH_COLOR = COLORS.GREEN.MAIN;
 
 // Export individual constants for backward compatibility
 export const BOUNDING_BOX_COLOR = GEOHASH_STYLE.BOUNDING_BOX_COLOR;

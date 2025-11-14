@@ -1,0 +1,136 @@
+.distance-config {
+  padding: 0;
+}
+
+.distance-config-section {
+  margin-bottom: 16px;
+}
+
+.distance-config-section:last-child {
+  margin-bottom: 0;
+}
+
+.distance-config-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.distance-config-select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: white;
+  color: #1f2937;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.distance-config-select:hover {
+  border-color: #9ca3af;
+}
+
+.distance-config-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.distance-config-select:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.distance-config-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #1e40af;
+  line-height: 1.5;
+}
+
+.distance-config-info-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #3b82f6;
+}
+
+.distance-config-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+.distance-config-warning-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #f59e0b;
+}
+
+.distance-config-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.distance-config-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.distance-config-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #3b82f6;
+}
+
+.distance-config-checkbox-label {
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+}
+
+.distance-config-radio-group {
+  display: flex;
+  gap: 20px;
+}
+
+.distance-config-radio-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.distance-config-radio {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #3b82f6;
+}
+
+.distance-config-radio-label {
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+}

@@ -1,0 +1,62 @@
+.advanced-options {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-top: 16px;
+  overflow: hidden;
+  transition: background-color 0.2s ease;
+}
+
+.advanced-options-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  transition: background-color 0.2s ease;
+}
+
+.advanced-options-toggle:hover {
+  background-color: #f9fafb;
+}
+
+.advanced-options-toggle:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: -2px;
+}
+
+.advanced-options-label {
+  font-weight: 600;
+}
+
+.chevron-icon {
+  transition: transform 0.3s ease;
+  color: #6b7280;
+}
+
+.chevron-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.advanced-options-content {
+  padding: 16px;
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

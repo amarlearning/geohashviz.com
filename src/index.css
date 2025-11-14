@@ -1,3 +1,11 @@
+:root {
+  --distance-reference-color: #10b981;
+  --distance-line-color: #3388ff;
+  --distance-info-color: #3b82f6;
+  --distance-warning-color: #f59e0b;
+  --distance-error-color: #ef4444;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

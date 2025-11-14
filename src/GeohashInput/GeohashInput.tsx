@@ -3,6 +3,11 @@ import React, { useState } from "react";
 import "./GeohashInput.css";
 import QuickActions from "../components/QuickActions";
 import CustomZoomControls from "../components/CustomZoomControls";
+import Geohash from "../GeohashMap/model/Geohash";
+import { DistanceConfig } from "../components/AdvancedOptions/DistanceAnalysis/utils/distanceTypes";
+import AdvancedOptions from "../components/AdvancedOptions/AdvancedOptions";
+import { DistanceAnalysis } from "../components/AdvancedOptions/DistanceAnalysis/DistanceAnalysis";
+import ErrorBoundary from "../components/AdvancedOptions/DistanceAnalysis/ErrorBoundary";
 
 interface FormComponentProps {
   onSubmit: (value: string) => void;
@@ -10,6 +15,11 @@ interface FormComponentProps {
   onZoomIn?: () => void;
   onZoomOut?: () => void;
   onFitBounds?: () => void;
+  advancedOptionsExpanded: boolean;
+  onAdvancedOptionsToggle: () => void;
+  distanceConfig: DistanceConfig;
+  onDistanceConfigChange: (config: DistanceConfig) => void;
+  validGeohashes: Geohash[];
 }
 
 const GeohashInput: React.FC<FormComponentProps> = ({
@@ -18,6 +28,11 @@ const GeohashInput: React.FC<FormComponentProps> = ({
   onZoomIn,
   onZoomOut,
   onFitBounds,
+  advancedOptionsExpanded,
+  onAdvancedOptionsToggle,
+  distanceConfig,
+  onDistanceConfigChange,
+  validGeohashes,
 }) => {
   const [value, setValue] = useState(defaultGeohashStr);
   
@@ -68,6 +83,21 @@ const GeohashInput: React.FC<FormComponentProps> = ({
           onFitBounds={onFitBounds}
         />
       )}
+      
+      <AdvancedOptions
+        expanded={advancedOptionsExpanded}
+        onToggle={onAdvancedOptionsToggle}
+      >
+        <ErrorBoundary>
+          <DistanceAnalysis
+            config={distanceConfig}
+            onConfigChange={onDistanceConfigChange}
+            validGeohashes={validGeohashes}
+            disabled={validGeohashes.length < 2}
+            disabledReason={validGeohashes.length < 2 ? "Need at least 2 valid geohashes" : undefined}
+          />
+        </ErrorBoundary>
+      </AdvancedOptions>
     </div>
   );
 };

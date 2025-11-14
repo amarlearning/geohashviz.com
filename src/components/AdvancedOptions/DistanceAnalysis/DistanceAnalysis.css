@@ -1,0 +1,123 @@
+.distance-analysis {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.distance-analysis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.distance-analysis-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.distance-analysis-icon {
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+/* Toggle Switch Styles */
+.distance-analysis-toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.distance-analysis-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cbd5e1;
+  transition: 0.3s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.distance-analysis-toggle input:checked + .toggle-slider {
+  background-color: #3b82f6;
+}
+
+.distance-analysis-toggle input:checked + .toggle-slider:before {
+  transform: translateX(20px);
+}
+
+.distance-analysis-toggle input:disabled + .toggle-slider {
+  background-color: #e5e7eb;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.distance-analysis-toggle input:disabled ~ .toggle-slider {
+  cursor: not-allowed;
+}
+
+/* Disabled State */
+.distance-analysis-disabled-message {
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  background-color: #fef3c7;
+  border: 1px solid #fbbf24;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+/* Error Message */
+.distance-analysis-error-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #991b1b;
+  line-height: 1.5;
+}
+
+.distance-analysis-error-message .error-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Config Panel */
+.distance-analysis-config {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}

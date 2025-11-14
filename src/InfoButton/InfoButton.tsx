@@ -56,7 +56,17 @@ const InfoButton = () => {
                             <li>📱 Responsive design</li>
                             <li>🎯 Precise bounding box calculations</li>
                             <li>⚡ Real-time visualization</li>
+                            <li>📏 Distance Analysis - Calculate and visualize distances between geohashes</li>
                         </ul>
+                        <h4>Distance Analysis</h4>
+                        <p>Advanced feature for calculating distances between geohashes with multiple modes:</p>
+                        <ul>
+                            <li><strong>From reference point</strong> - Measure from a selected geohash</li>
+                            <li><strong>Between consecutive</strong> - Path distances in input order</li>
+                            <li><strong>To nearest neighbor</strong> - Find closest geohash</li>
+                            <li><strong>All pairs</strong> - Calculate all possible distances</li>
+                        </ul>
+                        <p>Access via Advanced Options panel below the zoom controls.</p>
                         <div className="github-link-container">
                             <a href="https://github.com/amarlearning/geohashviz.com" target="_blank" rel="noopener noreferrer" className="github-star">
                                 Love the application? Give it a ⭐️ on GitHub!
