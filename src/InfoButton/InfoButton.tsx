@@ -1,82 +1,114 @@
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './InfoButton.css';
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./InfoButton.css";
 
 const InfoIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-    </svg>
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill="currentColor"
+      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+    />
+  </svg>
 );
 
-
 const InfoButton = () => {
-    const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
 
-    const handleToggle = (e: React.MouseEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('Info button clicked, current show state:', show);
-        setShow(!show);
+  const handleToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("Info button clicked, current show state:", show);
+    setShow(!show);
+  };
+  const handleClose = () => setShow(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".info-popup") && !target.closest(".info-button")) {
+        handleClose();
+      }
     };
-    const handleClose = () => setShow(false);
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            const target = event.target as HTMLElement;
-            if (!target.closest('.info-popup') && !target.closest('.info-button')) {
-                handleClose();
-            }
-        };
+    if (show) {
+      document.addEventListener("click", handleClickOutside);
+    }
 
-        if (show) {
-            document.addEventListener('click', handleClickOutside);
-        }
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [show]);
 
-        return () => {
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, [show]);
+  return (
+    <div className="info-button-container">
+      <button onClick={handleToggle} className="info-button">
+        <InfoIcon />
+      </button>
 
-    return (
-        <div className="info-button-container">
-            <button onClick={handleToggle} className="info-button">
-                <InfoIcon />
-            </button>
-
-            {show && (
-                <div className="info-popup">
-                    <div className="info-popup-content">
-                        <h3>GeohashViz.com</h3>
-                        <p>A modern web application for visualizing multiple geohashes on an interactive map. Perfect for developers working with location-based data and geohashing algorithms.</p>
-                        <h4>Features</h4>
-                        <ul>
-                            <li>🗺️ Interactive map visualization</li>
-                            <li>📦 Bulk geohash processing</li>
-                            <li>🚀 Fast rendering with memoization</li>
-                            <li>📱 Responsive design</li>
-                            <li>🎯 Precise bounding box calculations</li>
-                            <li>⚡ Real-time visualization</li>
-                            <li>📏 Distance Analysis - Calculate and visualize distances between geohashes</li>
-                        </ul>
-                        <h4>Distance Analysis</h4>
-                        <p>Advanced feature for calculating distances between geohashes with multiple modes:</p>
-                        <ul>
-                            <li><strong>From reference point</strong> - Measure from a selected geohash</li>
-                            <li><strong>Between consecutive</strong> - Path distances in input order</li>
-                            <li><strong>To nearest neighbor</strong> - Find closest geohash</li>
-                            <li><strong>All pairs</strong> - Calculate all possible distances</li>
-                        </ul>
-                        <p>Access via Advanced Options panel below the zoom controls.</p>
-                        <div className="github-link-container">
-                            <a href="https://github.com/amarlearning/geohashviz.com" target="_blank" rel="noopener noreferrer" className="github-star">
-                                Love the application? Give it a ⭐️ on GitHub!
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            )}
+      {show && (
+        <div className="info-popup">
+          <div className="info-popup-content">
+            <h3>GeohashViz.com</h3>
+            <p>
+              A modern web application for visualizing multiple geohashes on an
+              interactive map. Perfect for developers working with
+              location-based data and geohashing algorithms.
+            </p>
+            <h4>Features</h4>
+            <ul>
+              <li>🗺️ Interactive map visualization</li>
+              <li>📦 Bulk geohash processing</li>
+              <li>🚀 Fast rendering with memoization</li>
+              <li>📱 Responsive design</li>
+              <li>🎯 Precise bounding box calculations</li>
+              <li>⚡ Real-time visualization</li>
+              <li>
+                📏 Distance Analysis - Calculate and visualize distances between
+                geohashes
+              </li>
+            </ul>
+            <h4>Distance Analysis</h4>
+            <p>
+              Advanced feature for calculating distances between geohashes with
+              multiple modes:
+            </p>
+            <ul>
+              <li>
+                <strong>From reference point</strong> - Measure from a selected
+                geohash
+              </li>
+              <li>
+                <strong>Between consecutive</strong> - Path distances in input
+                order
+              </li>
+              <li>
+                <strong>To nearest neighbor</strong> - Find closest geohash
+              </li>
+              <li>
+                <strong>All pairs</strong> - Calculate all possible distances
+              </li>
+            </ul>
+            <p>Access via Advanced Options panel below the zoom controls.</p>
+            <div className="github-link-container">
+              <a
+                href="https://github.com/amarlearning/geohashviz.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="github-star"
+              >
+                Love the application? Give it a ⭐️ on GitHub!
+              </a>
+            </div>
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default InfoButton;

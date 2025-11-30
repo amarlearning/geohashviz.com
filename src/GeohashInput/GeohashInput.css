@@ -39,7 +39,9 @@
   border: 2px solid var(--border-color) !important;
   background-color: white !important;
   font-size: 14px;
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family:
+    "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New",
+    monospace;
   resize: vertical;
   min-height: 120px;
   padding: 12px !important;
@@ -62,7 +64,11 @@
   margin-top: 16px;
   width: 100%;
   border-radius: 8px !important;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  ) !important;
   border: none !important;
   padding: 12px 24px;
   font-weight: 600;
@@ -99,20 +105,20 @@
     top: 70px;
     padding: 16px;
   }
-  
+
   .geohash-form-title {
     font-size: 1rem;
   }
-  
+
   .geohash-form-description {
     font-size: 0.8rem;
   }
-  
+
   .geohash-textarea {
     min-height: 80px;
     font-size: 13px;
   }
-  
+
   .geohash-submit-button {
     padding: 10px 20px;
     font-size: 0.8rem;

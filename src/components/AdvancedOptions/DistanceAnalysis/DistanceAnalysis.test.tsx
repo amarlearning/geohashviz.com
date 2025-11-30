@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import DistanceAnalysis from './DistanceAnalysis';
-import { DistanceConfig } from './utils/distanceTypes';
-import Geohash from '../../../GeohashMap/model/Geohash';
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import DistanceAnalysis from "./DistanceAnalysis";
+import { DistanceConfig } from "./utils/distanceTypes";
+import Geohash from "../../../GeohashMap/model/Geohash";
 
 const mockGeohash = (geohash: string): Geohash => ({
   geohash,
@@ -12,17 +12,17 @@ const mockGeohash = (geohash: string): Geohash => ({
   ],
 });
 
-describe('DistanceAnalysis Component', () => {
+describe("DistanceAnalysis Component", () => {
   const defaultConfig: DistanceConfig = {
     enabled: false,
-    mode: 'reference',
+    mode: "reference",
     referenceGeohash: null,
-    units: 'km',
+    units: "km",
   };
 
-  test('renders with toggle switch', () => {
+  test("renders with toggle switch", () => {
     const onConfigChange = jest.fn();
-    const validGeohashes = [mockGeohash('abc'), mockGeohash('def')];
+    const validGeohashes = [mockGeohash("abc"), mockGeohash("def")];
 
     render(
       <DistanceAnalysis
@@ -33,12 +33,12 @@ describe('DistanceAnalysis Component', () => {
       />
     );
 
-    expect(screen.getByText('Distance Analysis')).toBeInTheDocument();
+    expect(screen.getByText("Distance Analysis")).toBeInTheDocument();
   });
 
-  test('shows disabled state with insufficient geohashes', () => {
+  test("shows disabled state with insufficient geohashes", () => {
     const onConfigChange = jest.fn();
-    const validGeohashes = [mockGeohash('abc')];
+    const validGeohashes = [mockGeohash("abc")];
 
     render(
       <DistanceAnalysis
@@ -50,12 +50,14 @@ describe('DistanceAnalysis Component', () => {
       />
     );
 
-    expect(screen.getByText(/Need at least 2 valid geohashes/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Need at least 2 valid geohashes/i)
+    ).toBeInTheDocument();
   });
 
-  test('enables toggle with sufficient geohashes', () => {
+  test("enables toggle with sufficient geohashes", () => {
     const onConfigChange = jest.fn();
-    const validGeohashes = [mockGeohash('abc'), mockGeohash('def')];
+    const validGeohashes = [mockGeohash("abc"), mockGeohash("def")];
 
     render(
       <DistanceAnalysis
@@ -66,13 +68,13 @@ describe('DistanceAnalysis Component', () => {
       />
     );
 
-    const toggle = screen.getByRole('checkbox');
+    const toggle = screen.getByRole("checkbox");
     expect(toggle).not.toBeDisabled();
   });
 
-  test('calls onConfigChange when toggle is clicked', () => {
+  test("calls onConfigChange when toggle is clicked", () => {
     const onConfigChange = jest.fn();
-    const validGeohashes = [mockGeohash('abc'), mockGeohash('def')];
+    const validGeohashes = [mockGeohash("abc"), mockGeohash("def")];
 
     render(
       <DistanceAnalysis
@@ -83,7 +85,7 @@ describe('DistanceAnalysis Component', () => {
       />
     );
 
-    const toggle = screen.getByRole('checkbox');
+    const toggle = screen.getByRole("checkbox");
     fireEvent.click(toggle);
 
     expect(onConfigChange).toHaveBeenCalledWith(
@@ -91,10 +93,14 @@ describe('DistanceAnalysis Component', () => {
     );
   });
 
-  test('shows config panel when enabled', () => {
+  test("shows config panel when enabled", () => {
     const onConfigChange = jest.fn();
-    const validGeohashes = [mockGeohash('abc'), mockGeohash('def')];
-    const enabledConfig = { ...defaultConfig, enabled: true, referenceGeohash: 'abc' };
+    const validGeohashes = [mockGeohash("abc"), mockGeohash("def")];
+    const enabledConfig = {
+      ...defaultConfig,
+      enabled: true,
+      referenceGeohash: "abc",
+    };
 
     render(
       <DistanceAnalysis

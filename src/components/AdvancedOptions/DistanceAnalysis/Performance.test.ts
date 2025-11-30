@@ -2,9 +2,9 @@ import {
   calculateDistances,
   clearDistanceCache,
   haversineDistance,
-} from './utils/distanceCalculator';
-import { DistanceConfig, Centroid } from './utils/distanceTypes';
-import Geohash from '../../../GeohashMap/model/Geohash';
+} from "./utils/distanceCalculator";
+import { DistanceConfig, Centroid } from "./utils/distanceTypes";
+import Geohash from "../../../GeohashMap/model/Geohash";
 
 const mockGeohash = (geohash: string, lat: number, lon: number): Geohash => ({
   geohash,
@@ -14,21 +14,21 @@ const mockGeohash = (geohash: string, lat: number, lon: number): Geohash => ({
   ],
 });
 
-describe('Performance Tests', () => {
+describe("Performance Tests", () => {
   beforeEach(() => {
     clearDistanceCache();
   });
 
-  describe('Calculation time', () => {
-    test('calculates distances for 10 geohashes quickly', () => {
+  describe("Calculation time", () => {
+    test("calculates distances for 10 geohashes quickly", () => {
       const geohashes = Array.from({ length: 10 }, (_, i) =>
         mockGeohash(`gh${i}`, 40 + i * 0.5, -75 + i * 0.5)
       );
       const config: DistanceConfig = {
         enabled: true,
-        mode: 'reference',
-        referenceGeohash: 'gh0',
-        units: 'km',
+        mode: "reference",
+        referenceGeohash: "gh0",
+        units: "km",
       };
 
       const startTime = performance.now();
@@ -39,15 +39,15 @@ describe('Performance Tests', () => {
       expect(endTime - startTime).toBeLessThan(50); // Should complete in < 50ms
     });
 
-    test('calculates distances for 20 geohashes quickly', () => {
+    test("calculates distances for 20 geohashes quickly", () => {
       const geohashes = Array.from({ length: 20 }, (_, i) =>
         mockGeohash(`gh${i}`, 40 + i * 0.3, -75 + i * 0.3)
       );
       const config: DistanceConfig = {
         enabled: true,
-        mode: 'reference',
-        referenceGeohash: 'gh0',
-        units: 'km',
+        mode: "reference",
+        referenceGeohash: "gh0",
+        units: "km",
       };
 
       const startTime = performance.now();
@@ -58,15 +58,15 @@ describe('Performance Tests', () => {
       expect(endTime - startTime).toBeLessThan(100); // Should complete in < 100ms
     });
 
-    test('consecutive mode is fast', () => {
+    test("consecutive mode is fast", () => {
       const geohashes = Array.from({ length: 50 }, (_, i) =>
         mockGeohash(`gh${i}`, 40 + i * 0.1, -75 + i * 0.1)
       );
       const config: DistanceConfig = {
         enabled: true,
-        mode: 'consecutive',
+        mode: "consecutive",
         referenceGeohash: null,
-        units: 'km',
+        units: "km",
       };
 
       const startTime = performance.now();
@@ -77,15 +77,15 @@ describe('Performance Tests', () => {
       expect(endTime - startTime).toBeLessThan(100);
     });
 
-    test('nearest neighbor mode completes in reasonable time', () => {
+    test("nearest neighbor mode completes in reasonable time", () => {
       const geohashes = Array.from({ length: 20 }, (_, i) =>
         mockGeohash(`gh${i}`, 40 + i * 0.2, -75 + i * 0.2)
       );
       const config: DistanceConfig = {
         enabled: true,
-        mode: 'nearest',
+        mode: "nearest",
         referenceGeohash: null,
-        units: 'km',
+        units: "km",
       };
 
       const startTime = performance.now();
@@ -97,9 +97,9 @@ describe('Performance Tests', () => {
     });
   });
 
-  describe('Memoization improves performance', () => {
-    test('cached calculations are faster than uncached', () => {
-      const point1: Centroid = { lat: 40.7128, lon: -74.0060 };
+  describe("Memoization improves performance", () => {
+    test("cached calculations are faster than uncached", () => {
+      const point1: Centroid = { lat: 40.7128, lon: -74.006 };
       const point2: Centroid = { lat: 51.5074, lon: -0.1278 };
 
       // First calculation (uncached)
@@ -118,15 +118,15 @@ describe('Performance Tests', () => {
       // Note: Cache is implemented at a higher level, so this test verifies consistency
     });
 
-    test('recalculation after cache clear', () => {
+    test("recalculation after cache clear", () => {
       const geohashes = Array.from({ length: 10 }, (_, i) =>
         mockGeohash(`gh${i}`, 40 + i, -75 + i)
       );
       const config: DistanceConfig = {
         enabled: true,
-        mode: 'reference',
-        referenceGeohash: 'gh0',
-        units: 'km',
+        mode: "reference",
+        referenceGeohash: "gh0",
+        units: "km",
       };
 
       // First calculation
@@ -144,16 +144,16 @@ describe('Performance Tests', () => {
     });
   });
 
-  describe('UI remains responsive', () => {
-    test('multiple rapid calculations do not block', () => {
+  describe("UI remains responsive", () => {
+    test("multiple rapid calculations do not block", () => {
       const geohashes = Array.from({ length: 15 }, (_, i) =>
         mockGeohash(`gh${i}`, 40 + i * 0.4, -75 + i * 0.4)
       );
       const config: DistanceConfig = {
         enabled: true,
-        mode: 'reference',
-        referenceGeohash: 'gh0',
-        units: 'km',
+        mode: "reference",
+        referenceGeohash: "gh0",
+        units: "km",
       };
 
       const startTime = performance.now();
@@ -170,16 +170,16 @@ describe('Performance Tests', () => {
     });
   });
 
-  describe('Memory usage', () => {
-    test('cache does not grow unbounded', () => {
+  describe("Memory usage", () => {
+    test("cache does not grow unbounded", () => {
       const geohashes = Array.from({ length: 100 }, (_, i) =>
         mockGeohash(`gh${i}`, 40 + i * 0.05, -75 + i * 0.05)
       );
       const config: DistanceConfig = {
         enabled: true,
-        mode: 'reference',
-        referenceGeohash: 'gh0',
-        units: 'km',
+        mode: "reference",
+        referenceGeohash: "gh0",
+        units: "km",
       };
 
       // Calculate distances

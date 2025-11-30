@@ -30,8 +30,13 @@
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
+    "type-check": "tsc --noEmit",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!your-module-name)/\"",
-    "eject": "react-scripts eject"
+    "test:ci": "CI=true react-scripts test --watchAll=false --passWithNoTests",
+    "validate": "npm run format:check && npm run type-check && npm run test:ci && npm run build",
+    "eject": "react-scripts eject",
+    "prepare": "husky"
   },
   "eslintConfig": {
     "extends": [
@@ -54,6 +59,13 @@
   "devDependencies": {
     "@types/leaflet": "^1.9.9",
     "gh-pages": "^6.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.5.3"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,css}": [
+      "prettier --write"
+    ]
   }
 }

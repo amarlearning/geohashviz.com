@@ -1,5 +1,9 @@
 .custom-tooltip {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
   border: none;
   color: white;
   font-weight: 600;
@@ -26,4 +30,13 @@
   stroke-width: 3;
   stroke-opacity: 1;
   fill-opacity: 0.5;
+}
+
+.geohash-rectangle-clickable {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.geohash-rectangle-clickable:hover {
+  opacity: 1 !important;
 }

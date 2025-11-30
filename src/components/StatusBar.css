@@ -43,8 +43,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .keyboard-shortcut {
@@ -54,7 +58,7 @@
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 500;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 @media (max-width: 768px) {
@@ -63,11 +67,11 @@
     gap: 12px;
     font-size: 0.8rem;
   }
-  
+
   .keyboard-shortcut {
     display: none;
   }
-  
+
   .status-item:last-child {
     display: none;
   }
@@ -78,7 +82,7 @@
     padding: 6px 12px;
     gap: 8px;
   }
-  
+
   .status-label {
     font-size: 0.75rem;
   }

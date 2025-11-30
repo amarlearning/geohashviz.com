@@ -1,13 +1,13 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import AdvancedOptions from './AdvancedOptions';
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import AdvancedOptions from "./AdvancedOptions";
 
-describe('AdvancedOptions Component', () => {
+describe("AdvancedOptions Component", () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
-  test('renders with collapsed state by default', () => {
+  test("renders with collapsed state by default", () => {
     const onToggle = jest.fn();
     render(
       <AdvancedOptions expanded={false} onToggle={onToggle}>
@@ -15,10 +15,10 @@ describe('AdvancedOptions Component', () => {
       </AdvancedOptions>
     );
 
-    expect(screen.queryByText('Test Content')).not.toBeInTheDocument();
+    expect(screen.queryByText("Test Content")).not.toBeInTheDocument();
   });
 
-  test('renders with expanded state', () => {
+  test("renders with expanded state", () => {
     const onToggle = jest.fn();
     render(
       <AdvancedOptions expanded={true} onToggle={onToggle}>
@@ -26,10 +26,10 @@ describe('AdvancedOptions Component', () => {
       </AdvancedOptions>
     );
 
-    expect(screen.getByText('Test Content')).toBeInTheDocument();
+    expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
 
-  test('calls onToggle when clicked', () => {
+  test("calls onToggle when clicked", () => {
     const onToggle = jest.fn();
     render(
       <AdvancedOptions expanded={false} onToggle={onToggle}>
@@ -37,13 +37,13 @@ describe('AdvancedOptions Component', () => {
       </AdvancedOptions>
     );
 
-    const button = screen.getByRole('button');
+    const button = screen.getByRole("button");
     fireEvent.click(button);
 
     expect(onToggle).toHaveBeenCalledTimes(1);
   });
 
-  test('supports keyboard navigation with Enter key', () => {
+  test("supports keyboard navigation with Enter key", () => {
     const onToggle = jest.fn();
     render(
       <AdvancedOptions expanded={false} onToggle={onToggle}>
@@ -51,13 +51,13 @@ describe('AdvancedOptions Component', () => {
       </AdvancedOptions>
     );
 
-    const button = screen.getByRole('button');
-    fireEvent.keyDown(button, { key: 'Enter' });
+    const button = screen.getByRole("button");
+    fireEvent.keyDown(button, { key: "Enter" });
 
     expect(onToggle).toHaveBeenCalledTimes(1);
   });
 
-  test('supports keyboard navigation with Space key', () => {
+  test("supports keyboard navigation with Space key", () => {
     const onToggle = jest.fn();
     render(
       <AdvancedOptions expanded={false} onToggle={onToggle}>
@@ -65,8 +65,8 @@ describe('AdvancedOptions Component', () => {
       </AdvancedOptions>
     );
 
-    const button = screen.getByRole('button');
-    fireEvent.keyDown(button, { key: ' ' });
+    const button = screen.getByRole("button");
+    fireEvent.keyDown(button, { key: " " });
 
     expect(onToggle).toHaveBeenCalledTimes(1);
   });

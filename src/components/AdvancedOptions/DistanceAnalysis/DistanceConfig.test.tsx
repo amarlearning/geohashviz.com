@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import DistanceConfig from './DistanceConfig';
-import { DistanceConfig as DistanceConfigType } from './utils/distanceTypes';
-import Geohash from '../../../GeohashMap/model/Geohash';
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import DistanceConfig from "./DistanceConfig";
+import { DistanceConfig as DistanceConfigType } from "./utils/distanceTypes";
+import Geohash from "../../../GeohashMap/model/Geohash";
 
 const mockGeohash = (geohash: string): Geohash => ({
   geohash,
@@ -12,17 +12,17 @@ const mockGeohash = (geohash: string): Geohash => ({
   ],
 });
 
-describe('DistanceConfig Component', () => {
+describe("DistanceConfig Component", () => {
   const defaultConfig: DistanceConfigType = {
     enabled: true,
-    mode: 'reference',
-    referenceGeohash: 'abc',
-    units: 'km',
+    mode: "reference",
+    referenceGeohash: "abc",
+    units: "km",
   };
 
-  test('renders calculation mode dropdown', () => {
+  test("renders calculation mode dropdown", () => {
     const onConfigChange = jest.fn();
-    const validGeohashes = [mockGeohash('abc'), mockGeohash('def')];
+    const validGeohashes = [mockGeohash("abc"), mockGeohash("def")];
 
     render(
       <DistanceConfig
@@ -35,9 +35,9 @@ describe('DistanceConfig Component', () => {
     expect(screen.getByText(/Calculation Mode/i)).toBeInTheDocument();
   });
 
-  test('shows reference point dropdown in reference mode', () => {
+  test("shows reference point dropdown in reference mode", () => {
     const onConfigChange = jest.fn();
-    const validGeohashes = [mockGeohash('abc'), mockGeohash('def')];
+    const validGeohashes = [mockGeohash("abc"), mockGeohash("def")];
 
     render(
       <DistanceConfig
@@ -50,10 +50,13 @@ describe('DistanceConfig Component', () => {
     expect(screen.getByLabelText(/Reference Point/i)).toBeInTheDocument();
   });
 
-  test('hides reference point dropdown in consecutive mode', () => {
+  test("hides reference point dropdown in consecutive mode", () => {
     const onConfigChange = jest.fn();
-    const validGeohashes = [mockGeohash('abc'), mockGeohash('def')];
-    const consecutiveConfig = { ...defaultConfig, mode: 'consecutive' as const };
+    const validGeohashes = [mockGeohash("abc"), mockGeohash("def")];
+    const consecutiveConfig = {
+      ...defaultConfig,
+      mode: "consecutive" as const,
+    };
 
     render(
       <DistanceConfig
@@ -66,9 +69,9 @@ describe('DistanceConfig Component', () => {
     expect(screen.queryByLabelText(/Reference Point/i)).not.toBeInTheDocument();
   });
 
-  test('changes mode when dropdown is changed', () => {
+  test("changes mode when dropdown is changed", () => {
     const onConfigChange = jest.fn();
-    const validGeohashes = [mockGeohash('abc'), mockGeohash('def')];
+    const validGeohashes = [mockGeohash("abc"), mockGeohash("def")];
 
     render(
       <DistanceConfig
@@ -78,17 +81,17 @@ describe('DistanceConfig Component', () => {
       />
     );
 
-    const modeSelect = screen.getAllByRole('combobox')[0];
-    fireEvent.change(modeSelect, { target: { value: 'consecutive' } });
+    const modeSelect = screen.getAllByRole("combobox")[0];
+    fireEvent.change(modeSelect, { target: { value: "consecutive" } });
 
     expect(onConfigChange).toHaveBeenCalledWith(
-      expect.objectContaining({ mode: 'consecutive' })
+      expect.objectContaining({ mode: "consecutive" })
     );
   });
 
-  test('renders unit selection radio buttons', () => {
+  test("renders unit selection radio buttons", () => {
     const onConfigChange = jest.fn();
-    const validGeohashes = [mockGeohash('abc'), mockGeohash('def')];
+    const validGeohashes = [mockGeohash("abc"), mockGeohash("def")];
 
     render(
       <DistanceConfig
@@ -102,9 +105,9 @@ describe('DistanceConfig Component', () => {
     expect(screen.getByText(/Miles/i)).toBeInTheDocument();
   });
 
-  test('changes unit when radio button is clicked', () => {
+  test("changes unit when radio button is clicked", () => {
     const onConfigChange = jest.fn();
-    const validGeohashes = [mockGeohash('abc'), mockGeohash('def')];
+    const validGeohashes = [mockGeohash("abc"), mockGeohash("def")];
 
     render(
       <DistanceConfig
@@ -118,7 +121,7 @@ describe('DistanceConfig Component', () => {
     fireEvent.click(milesRadio);
 
     expect(onConfigChange).toHaveBeenCalledWith(
-      expect.objectContaining({ units: 'miles' })
+      expect.objectContaining({ units: "miles" })
     );
   });
 });

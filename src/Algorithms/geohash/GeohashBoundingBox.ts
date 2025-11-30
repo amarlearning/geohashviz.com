@@ -55,7 +55,10 @@ export function getBoundingBox(geohash: string): GeohashBounds {
   return bounds;
 }
 
-function createGeohashObjects(geohashes: string[]): { valid: Geohash[], all: Geohash[] } {
+function createGeohashObjects(geohashes: string[]): {
+  valid: Geohash[];
+  all: Geohash[];
+} {
   const valid: Geohash[] = [];
   const all: Geohash[] = [];
 
@@ -75,7 +78,10 @@ function createGeohashObjects(geohashes: string[]): { valid: Geohash[], all: Geo
     } catch (error) {
       // Add invalid geohashes only to 'all' array for StatusBar validation
       const invalidGeohashObj: Geohash = {
-        boundingBox: [[0, 0], [0, 0]], // dummy bounding box
+        boundingBox: [
+          [0, 0],
+          [0, 0],
+        ], // dummy bounding box
         geohash,
       };
       all.push(invalidGeohashObj);

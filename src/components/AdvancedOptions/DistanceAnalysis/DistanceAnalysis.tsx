@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { DistanceConfig } from './utils/distanceTypes';
-import Geohash from '../../../GeohashMap/model/Geohash';
-import { validateDistanceConfig } from './utils/validation';
-import DistanceConfigComponent from './DistanceConfig';
-import './DistanceAnalysis.css';
+import React, { useState, useEffect } from "react";
+import { DistanceConfig } from "./utils/distanceTypes";
+import Geohash from "../../../GeohashMap/model/Geohash";
+import { validateDistanceConfig } from "./utils/validation";
+import DistanceConfigComponent from "./DistanceConfig";
+import "./DistanceAnalysis.css";
 
 /**
  * Props for the DistanceAnalysis component
@@ -36,7 +36,7 @@ export const DistanceAnalysis: React.FC<DistanceAnalysisProps> = ({
       const validation = validateDistanceConfig(config, validGeohashes);
       if (!validation.isValid && validation.error) {
         setValidationError(validation.error);
-        console.error('Distance configuration error:', validation.error);
+        console.error("Distance configuration error:", validation.error);
       } else {
         setValidationError(null);
       }
@@ -77,28 +77,28 @@ export const DistanceAnalysis: React.FC<DistanceAnalysisProps> = ({
       )}
       {validationError && config.enabled && (
         <div className="distance-analysis-error-message">
-          <svg 
-            className="error-icon" 
-            width="14" 
-            height="14" 
-            viewBox="0 0 14 14" 
-            fill="none" 
+          <svg
+            className="error-icon"
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path 
-              d="M7 1L1 13H13L7 1Z" 
-              stroke="currentColor" 
-              strokeWidth="1.5" 
-              strokeLinecap="round" 
+            <path
+              d="M7 1L1 13H13L7 1Z"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <path 
-              d="M7 5V8" 
-              stroke="currentColor" 
-              strokeWidth="1.5" 
+            <path
+              d="M7 5V8"
+              stroke="currentColor"
+              strokeWidth="1.5"
               strokeLinecap="round"
             />
-            <circle cx="7" cy="10.5" r="0.5" fill="currentColor"/>
+            <circle cx="7" cy="10.5" r="0.5" fill="currentColor" />
           </svg>
           {validationError}
         </div>

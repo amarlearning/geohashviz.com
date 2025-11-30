@@ -35,12 +35,12 @@ const GeohashInput: React.FC<FormComponentProps> = ({
   validGeohashes,
 }) => {
   const [value, setValue] = useState(defaultGeohashStr);
-  
+
   const handleClear = () => {
-    setValue('');
-    onSubmit('');
+    setValue("");
+    onSubmit("");
   };
-  
+
   const handleSample = () => {
     const sampleGeohashes = "dr5\ndpz\ndjf\ndnh\ndx1\ndn4";
     setValue(sampleGeohashes);
@@ -51,9 +51,11 @@ const GeohashInput: React.FC<FormComponentProps> = ({
     <div className="geohash-form-container">
       <div className="geohash-form-header">
         <h3 className="geohash-form-title">Geohash Input</h3>
-        <p className="geohash-form-description">Enter geohashes (one per line)</p>
+        <p className="geohash-form-description">
+          Enter geohashes (one per line)
+        </p>
       </div>
-      
+
       <textarea
         rows={6}
         className="form-control geohash-textarea"
@@ -62,7 +64,7 @@ const GeohashInput: React.FC<FormComponentProps> = ({
         onChange={(e) => setValue(e.target.value)}
         value={value}
       />
-      
+
       <button
         type="button"
         className="btn btn-primary geohash-submit-button"
@@ -70,20 +72,17 @@ const GeohashInput: React.FC<FormComponentProps> = ({
       >
         🗺️ Visualize Geohashes
       </button>
-      
-      <QuickActions 
-        onClear={handleClear}
-        onSample={handleSample}
-      />
-      
-      {(onZoomIn && onZoomOut && onFitBounds) && (
+
+      <QuickActions onClear={handleClear} onSample={handleSample} />
+
+      {onZoomIn && onZoomOut && onFitBounds && (
         <CustomZoomControls
           onZoomIn={onZoomIn}
           onZoomOut={onZoomOut}
           onFitBounds={onFitBounds}
         />
       )}
-      
+
       <AdvancedOptions
         expanded={advancedOptionsExpanded}
         onToggle={onAdvancedOptionsToggle}
@@ -94,7 +93,11 @@ const GeohashInput: React.FC<FormComponentProps> = ({
             onConfigChange={onDistanceConfigChange}
             validGeohashes={validGeohashes}
             disabled={validGeohashes.length < 2}
-            disabledReason={validGeohashes.length < 2 ? "Need at least 2 valid geohashes" : undefined}
+            disabledReason={
+              validGeohashes.length < 2
+                ? "Need at least 2 valid geohashes"
+                : undefined
+            }
           />
         </ErrorBoundary>
       </AdvancedOptions>

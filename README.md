@@ -68,6 +68,14 @@ The Distance Analysis feature allows you to calculate and visualize distances be
 - Distance lines are drawn as smooth curved arcs in orange, connecting related geohashes
 - Distance values are displayed directly on the arc lines for easy reading
 
+**Interactive Highlighting:**
+
+- **Click on any distance line** to highlight the two geohashes it connects (line turns green)
+- **Click on any geohash** to highlight all distance lines connected to it
+- **Click again** or **press ESC** to clear the highlight
+- When highlighted, dimmed elements fade to 20% opacity for better focus
+- A floating indicator shows what's currently highlighted with a quick clear button
+
 ## Tech Stack
 
 - **Frontend**: React.js with TypeScript
@@ -75,9 +83,44 @@ The Distance Analysis feature allows you to calculate and visualize distances be
 - **Styling**: CSS Modules
 - **Package Manager**: npm
 
+## Development
+
+### Git Hooks
+
+This project uses [Husky](https://typicode.github.io/husky/) to run automated checks before commits and pushes:
+
+**Pre-commit** (runs on `git commit`):
+- ✨ Format staged files with Prettier
+- 🔧 TypeScript type checking
+- 🧪 Run all tests
+
+**Pre-push** (runs on `git push`):
+- 📝 Format all code
+- 🔧 TypeScript type checking
+- 🧪 Run all tests
+- 🏗️ Production build
+
+**Manual validation:**
+```bash
+npm run validate  # Run all CI checks locally
+```
+
+### Available Scripts
+
+- `npm start` - Start development server
+- `npm run build` - Build for production
+- `npm test` - Run tests in watch mode
+- `npm run test:ci` - Run tests once (CI mode)
+- `npm run format` - Format all code with Prettier
+- `npm run format:check` - Check code formatting
+- `npm run type-check` - Run TypeScript type checking
+- `npm run validate` - Run all CI checks (format, type-check, test, build)
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+All commits are automatically validated with the pre-commit hooks to ensure code quality.
 
 ## Bug Reports
 

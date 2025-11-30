@@ -1,5 +1,5 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import './ErrorBoundary.css';
+import React, { Component, ErrorInfo, ReactNode } from "react";
+import "./ErrorBoundary.css";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -32,8 +32,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error('Distance Analysis Error:', error);
-    console.error('Error Info:', errorInfo);
+    console.error("Distance Analysis Error:", error);
+    console.error("Error Info:", errorInfo);
   }
 
   render(): ReactNode {
@@ -44,34 +44,34 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
       return (
         <div className="error-boundary-fallback">
-          <svg 
-            className="error-boundary-icon" 
-            width="20" 
-            height="20" 
-            viewBox="0 0 20 20" 
-            fill="none" 
+          <svg
+            className="error-boundary-icon"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path 
-              d="M10 2L2 18H18L10 2Z" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
+            <path
+              d="M10 2L2 18H18L10 2Z"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <path 
-              d="M10 7V11" 
-              stroke="currentColor" 
-              strokeWidth="2" 
+            <path
+              d="M10 7V11"
+              stroke="currentColor"
+              strokeWidth="2"
               strokeLinecap="round"
             />
-            <circle cx="10" cy="14" r="0.5" fill="currentColor"/>
+            <circle cx="10" cy="14" r="0.5" fill="currentColor" />
           </svg>
           <div className="error-boundary-message">
             Distance analysis temporarily unavailable
           </div>
           <div className="error-boundary-details">
-            {this.state.error?.message || 'An unexpected error occurred'}
+            {this.state.error?.message || "An unexpected error occurred"}
           </div>
         </div>
       );

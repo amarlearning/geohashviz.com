@@ -11,12 +11,19 @@ import {
 import BoundsFitter from "./components/BoundsFitter";
 import GeohashRectangles from "./components/GeohashRectangles";
 import DistanceLines from "../components/AdvancedOptions/DistanceAnalysis/DistanceLines";
-import { DistanceConfig, DistanceResult } from "../components/AdvancedOptions/DistanceAnalysis/utils/distanceTypes";
+import {
+  DistanceConfig,
+  DistanceResult,
+  HighlightState,
+} from "../components/AdvancedOptions/DistanceAnalysis/utils/distanceTypes";
 
 interface LeafletContainerProps {
   geohashes: Geohash[];
   distanceConfig?: DistanceConfig;
   distances?: DistanceResult[];
+  highlightState?: HighlightState;
+  onGeohashClick?: (geohash: string) => void;
+  onLineClick?: (from: string, to: string) => void;
 }
 
 export interface GeohashMapRef {
@@ -31,7 +38,17 @@ export interface GeohashMapRef {
  * and geohash visualization
  */
 const GeohashMap = forwardRef<GeohashMapRef, LeafletContainerProps>(
-  ({ geohashes, distanceConfig, distances }, ref) => {
+  (
+    {
+      geohashes,
+      distanceConfig,
+      distances,
+      highlightState,
+      onGeohashClick,
+      onLineClick,
+    },
+    ref
+  ) => {
     const mapInstanceRef = useRef<any>(null);
 
     useImperativeHandle(ref, () => ({
@@ -79,12 +96,16 @@ const GeohashMap = forwardRef<GeohashMapRef, LeafletContainerProps>(
           geohashes={geohashes}
           distanceConfig={distanceConfig}
           distances={distances}
+          highlightState={highlightState}
+          onGeohashClick={onGeohashClick}
         />
         {distances && distances.length > 0 && distanceConfig && (
           <DistanceLines
             geohashes={geohashes}
             config={distanceConfig}
             distances={distances}
+            highlightState={highlightState}
+            onLineClick={onLineClick}
           />
         )}
       </MapContainer>

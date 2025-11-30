@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { DistanceConfig as DistanceConfigType } from './utils/distanceTypes';
-import Geohash from '../../../GeohashMap/model/Geohash';
-import { validateDistanceConfig } from './utils/validation';
-import './DistanceConfig.css';
+import React, { useEffect } from "react";
+import { DistanceConfig as DistanceConfigType } from "./utils/distanceTypes";
+import Geohash from "../../../GeohashMap/model/Geohash";
+import { validateDistanceConfig } from "./utils/validation";
+import "./DistanceConfig.css";
 
 /**
  * Props for the DistanceConfig component
@@ -25,15 +25,18 @@ const DistanceConfig: React.FC<DistanceConfigProps> = ({
   useEffect(() => {
     const validation = validateDistanceConfig(config, validGeohashes);
     if (!validation.isValid) {
-      console.warn('Distance configuration validation failed:', validation.error);
+      console.warn(
+        "Distance configuration validation failed:",
+        validation.error
+      );
     }
     if (validation.warning) {
-      console.warn('Distance configuration warning:', validation.warning);
+      console.warn("Distance configuration warning:", validation.warning);
     }
   }, [config, validGeohashes]);
 
   const handleModeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newMode = e.target.value as DistanceConfigType['mode'];
+    const newMode = e.target.value as DistanceConfigType["mode"];
     onConfigChange({
       ...config,
       mode: newMode,
@@ -50,41 +53,44 @@ const DistanceConfig: React.FC<DistanceConfigProps> = ({
   const handleUnitsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onConfigChange({
       ...config,
-      units: e.target.value as 'km' | 'miles',
+      units: e.target.value as "km" | "miles",
     });
   };
 
   // Default to first geohash if null
-  const referenceGeohash = config.referenceGeohash || (validGeohashes.length > 0 ? validGeohashes[0].geohash : '');
+  const referenceGeohash =
+    config.referenceGeohash ||
+    (validGeohashes.length > 0 ? validGeohashes[0].geohash : "");
 
   // Generate info message based on mode
   const getInfoMessage = (): string => {
     switch (config.mode) {
-      case 'reference':
+      case "reference":
         return `Distances calculated from '${referenceGeohash}'`;
-      case 'consecutive':
+      case "consecutive":
         const segmentCount = Math.max(0, validGeohashes.length - 1);
-        return `Showing path distances (${segmentCount} segment${segmentCount !== 1 ? 's' : ''})`;
-      case 'nearest':
-        return 'Each geohash shows distance to nearest neighbor';
-      case 'allPairs':
-        const pairCount = (validGeohashes.length * (validGeohashes.length - 1)) / 2;
-        return `Showing ${pairCount} pairwise distance${pairCount !== 1 ? 's' : ''}`;
+        return `Showing path distances (${segmentCount} segment${segmentCount !== 1 ? "s" : ""})`;
+      case "nearest":
+        return "Each geohash shows distance to nearest neighbor";
+      case "allPairs":
+        const pairCount =
+          (validGeohashes.length * (validGeohashes.length - 1)) / 2;
+        return `Showing ${pairCount} pairwise distance${pairCount !== 1 ? "s" : ""}`;
       default:
-        return '';
+        return "";
     }
   };
 
   // Check for warnings
   const geohashCount = validGeohashes.length;
-  const showAllPairsWarning = config.mode === 'allPairs' && geohashCount > 10;
+  const showAllPairsWarning = config.mode === "allPairs" && geohashCount > 10;
   const disableAllPairs = geohashCount > 20;
   const showPerformanceWarning = geohashCount > 50;
 
   // Get warning message
   const getWarningMessage = (): string | null => {
     if (showPerformanceWarning) {
-      return 'Large dataset may impact performance';
+      return "Large dataset may impact performance";
     }
     if (showAllPairsWarning) {
       const pairCount = (geohashCount * (geohashCount - 1)) / 2;
@@ -110,13 +116,13 @@ const DistanceConfig: React.FC<DistanceConfigProps> = ({
           <option value="consecutive">Between consecutive</option>
           <option value="nearest">To nearest neighbor</option>
           <option value="allPairs" disabled={disableAllPairs}>
-            All pairs{disableAllPairs ? ' (max 20 geohashes)' : ''}
+            All pairs{disableAllPairs ? " (max 20 geohashes)" : ""}
           </option>
         </select>
       </div>
 
       {/* Reference Point Dropdown - Only show when mode is 'reference' */}
-      {config.mode === 'reference' && (
+      {config.mode === "reference" && (
         <div className="distance-config-section">
           <label htmlFor="reference-point" className="distance-config-label">
             Reference Point
@@ -139,30 +145,54 @@ const DistanceConfig: React.FC<DistanceConfigProps> = ({
       {/* Info Message */}
       <div className="distance-config-section">
         <div className="distance-config-info">
-          <svg 
-            className="distance-config-info-icon" 
-            width="14" 
-            height="14" 
-            viewBox="0 0 14 14" 
-            fill="none" 
+          <svg
+            className="distance-config-info-icon"
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <circle 
-              cx="7" 
-              cy="7" 
-              r="6" 
-              stroke="currentColor" 
+            <circle
+              cx="7"
+              cy="7"
+              r="6"
+              stroke="currentColor"
               strokeWidth="1.5"
             />
-            <path 
-              d="M7 6V10" 
-              stroke="currentColor" 
-              strokeWidth="1.5" 
+            <path
+              d="M7 6V10"
+              stroke="currentColor"
+              strokeWidth="1.5"
               strokeLinecap="round"
             />
-            <circle cx="7" cy="4" r="0.5" fill="currentColor"/>
+            <circle cx="7" cy="4" r="0.5" fill="currentColor" />
           </svg>
           <span>{getInfoMessage()}</span>
+        </div>
+      </div>
+
+      {/* Interactive Tip */}
+      <div className="distance-config-section">
+        <div className="distance-config-tip">
+          <svg
+            className="distance-config-tip-icon"
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7 1L9 5L13 5.5L10 8.5L11 13L7 11L3 13L4 8.5L1 5.5L5 5L7 1Z"
+              stroke="currentColor"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+          </svg>
+          <span>💡 Click on lines or geohashes to highlight connections</span>
         </div>
       </div>
 
@@ -170,30 +200,30 @@ const DistanceConfig: React.FC<DistanceConfigProps> = ({
       {getWarningMessage() && (
         <div className="distance-config-section">
           <div className="distance-config-warning">
-            <svg 
-              className="distance-config-warning-icon" 
-              width="14" 
-              height="14" 
-              viewBox="0 0 14 14" 
-              fill="none" 
+            <svg
+              className="distance-config-warning-icon"
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path 
-                d="M7 1L1 13H13L7 1Z" 
-                stroke="currentColor" 
-                strokeWidth="1.5" 
-                strokeLinecap="round" 
+              <path
+                d="M7 1L1 13H13L7 1Z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
                 strokeLinejoin="round"
               />
-              <path 
-                d="M7 5V8" 
-                stroke="currentColor" 
-                strokeWidth="1.5" 
+              <path
+                d="M7 5V8"
+                stroke="currentColor"
+                strokeWidth="1.5"
                 strokeLinecap="round"
               />
-              <circle cx="7" cy="10.5" r="0.5" fill="currentColor"/>
+              <circle cx="7" cy="10.5" r="0.5" fill="currentColor" />
             </svg>
-            <span>{getWarningMessage()?.replace('⚠️ ', '')}</span>
+            <span>{getWarningMessage()?.replace("⚠️ ", "")}</span>
           </div>
         </div>
       )}
@@ -209,7 +239,7 @@ const DistanceConfig: React.FC<DistanceConfigProps> = ({
               name="units"
               className="distance-config-radio"
               value="km"
-              checked={config.units === 'km'}
+              checked={config.units === "km"}
               onChange={handleUnitsChange}
             />
             <label htmlFor="units-km" className="distance-config-radio-label">
@@ -223,10 +253,13 @@ const DistanceConfig: React.FC<DistanceConfigProps> = ({
               name="units"
               className="distance-config-radio"
               value="miles"
-              checked={config.units === 'miles'}
+              checked={config.units === "miles"}
               onChange={handleUnitsChange}
             />
-            <label htmlFor="units-miles" className="distance-config-radio-label">
+            <label
+              htmlFor="units-miles"
+              className="distance-config-radio-label"
+            >
               Miles
             </label>
           </div>

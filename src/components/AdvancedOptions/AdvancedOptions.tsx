@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import './AdvancedOptions.css';
+import React, { useEffect } from "react";
+import "./AdvancedOptions.css";
 
 /**
  * Props for the AdvancedOptions component
@@ -14,7 +14,7 @@ interface AdvancedOptionsProps {
 }
 
 /** localStorage key for persisting expanded state */
-const STORAGE_KEY = 'geohashviz_advanced_options_expanded';
+const STORAGE_KEY = "geohashviz_advanced_options_expanded";
 
 const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({
   expanded,
@@ -27,7 +27,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({
   }, [expanded]);
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       onToggle();
     }
@@ -45,7 +45,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({
       >
         <span className="advanced-options-label">Advanced Options</span>
         <svg
-          className={`chevron-icon ${expanded ? 'expanded' : ''}`}
+          className={`chevron-icon ${expanded ? "expanded" : ""}`}
           width="20"
           height="20"
           viewBox="0 0 20 20"
@@ -62,11 +62,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({
           />
         </svg>
       </button>
-      {expanded && (
-        <div className="advanced-options-content">
-          {children}
-        </div>
-      )}
+      {expanded && <div className="advanced-options-content">{children}</div>}
     </div>
   );
 };

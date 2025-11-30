@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🚀 Running pre-push checks (full CI simulation)..."
+
+# Run all formatting
+echo "📝 Checking all code formatting..."
+npm run format || {
+  echo "❌ Formatting check failed."
+  exit 1
+}
+
+# Run TypeScript type checking
+echo "🔧 Running TypeScript type check..."
+npx tsc --noEmit || {
+  echo "❌ TypeScript type check failed."
+  exit 1
+}
+
+# Run all tests
+echo "🧪 Running all tests..."
+CI=true npm test -- --watchAll=false --passWithNoTests || {
+  echo "❌ Tests failed."
+  exit 1
+}
+
+# Run production build
+echo "🏗️  Building project..."
+npm run build || {
+  echo "❌ Build failed."
+  exit 1
+}
+
+echo "✅ All pre-push checks passed! Ready to push."

@@ -1,5 +1,5 @@
-import Geohash from '../../../../GeohashMap/model/Geohash';
-import { DistanceConfig, DistanceResult, Centroid } from './distanceTypes';
+import Geohash from "../../../../GeohashMap/model/Geohash";
+import { DistanceConfig, DistanceResult, Centroid } from "./distanceTypes";
 
 /**
  * Distance cache for memoization
@@ -37,19 +37,24 @@ export function calculateCentroid(
 ): Centroid {
   try {
     const [[swLat, swLon], [neLat, neLon]] = boundingBox;
-    
+
     // Validate coordinates
-    if (!isFinite(swLat) || !isFinite(swLon) || !isFinite(neLat) || !isFinite(neLon)) {
-      console.warn('Invalid coordinates in bounding box:', boundingBox);
+    if (
+      !isFinite(swLat) ||
+      !isFinite(swLon) ||
+      !isFinite(neLat) ||
+      !isFinite(neLon)
+    ) {
+      console.warn("Invalid coordinates in bounding box:", boundingBox);
       return { lat: 0, lon: 0 };
     }
-    
+
     return {
       lat: (swLat + neLat) / 2,
       lon: (swLon + neLon) / 2,
     };
   } catch (error) {
-    console.error('Error calculating centroid:', error);
+    console.error("Error calculating centroid:", error);
     return { lat: 0, lon: 0 };
   }
 }
@@ -60,43 +65,50 @@ export function calculateCentroid(
  * @param point2 Second centroid
  * @returns Distance in kilometers
  */
-export function haversineDistance(
-  point1: Centroid,
-  point2: Centroid
-): number {
+export function haversineDistance(point1: Centroid, point2: Centroid): number {
   try {
     // Validate input coordinates
-    if (!isFinite(point1.lat) || !isFinite(point1.lon) || 
-        !isFinite(point2.lat) || !isFinite(point2.lon)) {
-      console.warn('Invalid coordinates for distance calculation:', point1, point2);
+    if (
+      !isFinite(point1.lat) ||
+      !isFinite(point1.lon) ||
+      !isFinite(point2.lat) ||
+      !isFinite(point2.lon)
+    ) {
+      console.warn(
+        "Invalid coordinates for distance calculation:",
+        point1,
+        point2
+      );
       return 0;
     }
-    
+
     const R = 6371; // Earth's radius in kilometers
-    
+
     const lat1Rad = toRadians(point1.lat);
     const lat2Rad = toRadians(point2.lat);
     const deltaLat = toRadians(point2.lat - point1.lat);
     const deltaLon = toRadians(point2.lon - point1.lon);
-    
-    const a = 
+
+    const a =
       Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-      Math.cos(lat1Rad) * Math.cos(lat2Rad) *
-      Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
-    
+      Math.cos(lat1Rad) *
+        Math.cos(lat2Rad) *
+        Math.sin(deltaLon / 2) *
+        Math.sin(deltaLon / 2);
+
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    
+
     const distance = R * c;
-    
+
     // Validate result
     if (!isFinite(distance) || distance < 0) {
-      console.warn('Invalid distance calculated:', distance);
+      console.warn("Invalid distance calculated:", distance);
       return 0;
     }
-    
+
     return distance;
   } catch (error) {
-    console.error('Error calculating haversine distance:', error);
+    console.error("Error calculating haversine distance:", error);
     return 0;
   }
 }
@@ -117,21 +129,21 @@ function getOrCalculateDistance(
 ): number {
   try {
     const cacheKey = getCacheKey(geohash1, geohash2);
-    
+
     if (distanceCache.has(cacheKey)) {
       return distanceCache.get(cacheKey)!;
     }
-    
+
     const distance = haversineDistance(centroid1, centroid2);
-    
+
     // Only cache valid distances
     if (isFinite(distance) && distance >= 0) {
       distanceCache.set(cacheKey, distance);
     }
-    
+
     return distance;
   } catch (error) {
-    console.error('Error getting or calculating distance:', error);
+    console.error("Error getting or calculating distance:", error);
     return 0;
   }
 }
@@ -154,19 +166,19 @@ function calculateReferenceDistances(
   referenceGeohash: string
 ): DistanceResult[] {
   try {
-    const reference = geohashes.find(g => g.geohash === referenceGeohash);
+    const reference = geohashes.find((g) => g.geohash === referenceGeohash);
     if (!reference) {
       console.warn(`Reference geohash "${referenceGeohash}" not found`);
       return [];
     }
-    
+
     const refCentroid = calculateCentroid(reference.boundingBox);
-    
+
     const results: DistanceResult[] = [];
-    
+
     for (const geohash of geohashes) {
       if (geohash.geohash === referenceGeohash) continue;
-      
+
       try {
         const centroid = calculateCentroid(geohash.boundingBox);
         const distance = getOrCalculateDistance(
@@ -175,22 +187,25 @@ function calculateReferenceDistances(
           reference.geohash,
           geohash.geohash
         );
-        
+
         results.push({
           from: reference,
           to: geohash,
           distance,
-          mode: 'reference' as const,
+          mode: "reference" as const,
         });
       } catch (error) {
-        console.error(`Error calculating distance for geohash ${geohash.geohash}:`, error);
+        console.error(
+          `Error calculating distance for geohash ${geohash.geohash}:`,
+          error
+        );
         // Skip this geohash and continue with others
       }
     }
-    
+
     return results;
   } catch (error) {
-    console.error('Error in calculateReferenceDistances:', error);
+    console.error("Error in calculateReferenceDistances:", error);
     return [];
   }
 }
@@ -200,17 +215,15 @@ function calculateReferenceDistances(
  * @param geohashes Array of geohashes
  * @returns Array of distance results
  */
-function calculateConsecutiveDistances(
-  geohashes: Geohash[]
-): DistanceResult[] {
+function calculateConsecutiveDistances(geohashes: Geohash[]): DistanceResult[] {
   try {
     const results: DistanceResult[] = [];
-    
+
     for (let i = 0; i < geohashes.length - 1; i++) {
       try {
         const from = geohashes[i];
         const to = geohashes[i + 1];
-        
+
         const fromCentroid = calculateCentroid(from.boundingBox);
         const toCentroid = calculateCentroid(to.boundingBox);
         const distance = getOrCalculateDistance(
@@ -219,22 +232,25 @@ function calculateConsecutiveDistances(
           from.geohash,
           to.geohash
         );
-        
+
         results.push({
           from,
           to,
           distance,
-          mode: 'consecutive',
+          mode: "consecutive",
         });
       } catch (error) {
-        console.error(`Error calculating consecutive distance at index ${i}:`, error);
+        console.error(
+          `Error calculating consecutive distance at index ${i}:`,
+          error
+        );
         // Skip this pair and continue with others
       }
     }
-    
+
     return results;
   } catch (error) {
-    console.error('Error in calculateConsecutiveDistances:', error);
+    console.error("Error in calculateConsecutiveDistances:", error);
     return [];
   }
 }
@@ -249,16 +265,16 @@ function calculateNearestNeighborDistances(
 ): DistanceResult[] {
   try {
     const results: DistanceResult[] = [];
-    
+
     for (const geohash of geohashes) {
       try {
         const centroid = calculateCentroid(geohash.boundingBox);
         let minDistance = Infinity;
         let nearestNeighbor: Geohash | null = null;
-        
+
         for (const other of geohashes) {
           if (other.geohash === geohash.geohash) continue;
-          
+
           try {
             const otherCentroid = calculateCentroid(other.boundingBox);
             const distance = getOrCalculateDistance(
@@ -267,34 +283,40 @@ function calculateNearestNeighborDistances(
               geohash.geohash,
               other.geohash
             );
-            
+
             if (distance < minDistance && isFinite(distance)) {
               minDistance = distance;
               nearestNeighbor = other;
             }
           } catch (error) {
-            console.error(`Error calculating distance to ${other.geohash}:`, error);
+            console.error(
+              `Error calculating distance to ${other.geohash}:`,
+              error
+            );
             // Skip this neighbor and continue
           }
         }
-        
+
         if (nearestNeighbor) {
           results.push({
             from: geohash,
             to: nearestNeighbor,
             distance: minDistance,
-            mode: 'nearest' as const,
+            mode: "nearest" as const,
           });
         }
       } catch (error) {
-        console.error(`Error finding nearest neighbor for ${geohash.geohash}:`, error);
+        console.error(
+          `Error finding nearest neighbor for ${geohash.geohash}:`,
+          error
+        );
         // Skip this geohash and continue with others
       }
     }
-    
+
     return results;
   } catch (error) {
-    console.error('Error in calculateNearestNeighborDistances:', error);
+    console.error("Error in calculateNearestNeighborDistances:", error);
     return [];
   }
 }
@@ -304,18 +326,16 @@ function calculateNearestNeighborDistances(
  * @param geohashes Array of geohashes
  * @returns Array of distance results
  */
-function calculateAllPairsDistances(
-  geohashes: Geohash[]
-): DistanceResult[] {
+function calculateAllPairsDistances(geohashes: Geohash[]): DistanceResult[] {
   try {
     const results: DistanceResult[] = [];
-    
+
     for (let i = 0; i < geohashes.length; i++) {
       for (let j = i + 1; j < geohashes.length; j++) {
         try {
           const from = geohashes[i];
           const to = geohashes[j];
-          
+
           const fromCentroid = calculateCentroid(from.boundingBox);
           const toCentroid = calculateCentroid(to.boundingBox);
           const distance = getOrCalculateDistance(
@@ -324,23 +344,26 @@ function calculateAllPairsDistances(
             from.geohash,
             to.geohash
           );
-          
+
           results.push({
             from,
             to,
             distance,
-            mode: 'allPairs',
+            mode: "allPairs",
           });
         } catch (error) {
-          console.error(`Error calculating distance for pair (${i}, ${j}):`, error);
+          console.error(
+            `Error calculating distance for pair (${i}, ${j}):`,
+            error
+          );
           // Skip this pair and continue with others
         }
       }
     }
-    
+
     return results;
   } catch (error) {
-    console.error('Error in calculateAllPairsDistances:', error);
+    console.error("Error in calculateAllPairsDistances:", error);
     return [];
   }
 }
@@ -361,21 +384,21 @@ export function calculateDistances(
 
   try {
     switch (config.mode) {
-      case 'reference':
+      case "reference":
         if (!config.referenceGeohash) return [];
         return calculateReferenceDistances(geohashes, config.referenceGeohash);
-      case 'consecutive':
+      case "consecutive":
         return calculateConsecutiveDistances(geohashes);
-      case 'nearest':
+      case "nearest":
         return calculateNearestNeighborDistances(geohashes);
-      case 'allPairs':
+      case "allPairs":
         return calculateAllPairsDistances(geohashes);
       default:
         console.warn(`Unknown distance calculation mode: ${config.mode}`);
         return [];
     }
   } catch (error) {
-    console.error('Error calculating distances:', error);
+    console.error("Error calculating distances:", error);
     return [];
   }
 }
@@ -388,22 +411,22 @@ export function calculateDistances(
  */
 export function formatDistance(
   distanceKm: number,
-  unit: 'km' | 'miles'
+  unit: "km" | "miles"
 ): string {
   try {
     // Validate input
     if (!isFinite(distanceKm) || distanceKm < 0) {
-      console.warn('Invalid distance value:', distanceKm);
-      return '0.00 km';
+      console.warn("Invalid distance value:", distanceKm);
+      return "0.00 km";
     }
-    
-    if (unit === 'miles') {
+
+    if (unit === "miles") {
       const miles = distanceKm * 0.621371;
       return `${miles.toFixed(2)} mi`;
     }
     return `${distanceKm.toFixed(2)} km`;
   } catch (error) {
-    console.error('Error formatting distance:', error);
-    return '0.00 km';
+    console.error("Error formatting distance:", error);
+    return "0.00 km";
   }
 }

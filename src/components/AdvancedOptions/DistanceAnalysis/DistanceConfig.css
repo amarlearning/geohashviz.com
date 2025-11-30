@@ -134,3 +134,22 @@
   cursor: pointer;
   user-select: none;
 }
+
+.distance-config-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #166534;
+  line-height: 1.5;
+}
+
+.distance-config-tip-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #22c55e;
+}

@@ -1,3 +1,24 @@
+/* Base distance line styles */
+.distance-line {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.distance-line:hover {
+  opacity: 1 !important;
+}
+
+.distance-line-highlighted {
+  cursor: pointer;
+  z-index: 1000 !important;
+}
+
+.distance-line-dimmed {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Distance label styles */
 .distance-label {
   background-color: rgba(255, 107, 53, 0.9) !important;
   border: none !important;
@@ -8,8 +29,24 @@
   color: white !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
   white-space: nowrap !important;
+  transition: all 0.2s ease !important;
+  pointer-events: none !important;
 }
 
 .distance-label::before {
   display: none !important;
+}
+
+/* Highlighted label */
+.distance-label-highlighted {
+  background-color: rgba(16, 185, 129, 0.95) !important;
+  font-size: 13px !important;
+  padding: 6px 10px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+  z-index: 1001 !important;
+}
+
+/* Dimmed label */
+.distance-label-dimmed {
+  opacity: 0.3 !important;
 }

@@ -1,9 +1,13 @@
-import React, { useMemo } from 'react';
-import { Polyline, Tooltip } from 'react-leaflet';
-import Geohash from '../../../GeohashMap/model/Geohash';
-import { DistanceConfig, DistanceResult } from './utils/distanceTypes';
-import { calculateCentroid } from './utils/distanceCalculator';
-import './DistanceLines.css';
+import React, { useMemo } from "react";
+import { Polyline, Tooltip } from "react-leaflet";
+import Geohash from "../../../GeohashMap/model/Geohash";
+import {
+  DistanceConfig,
+  DistanceResult,
+  HighlightState,
+} from "./utils/distanceTypes";
+import { calculateCentroid } from "./utils/distanceCalculator";
+import "./DistanceLines.css";
 
 /**
  * Props for DistanceLines component
@@ -15,6 +19,10 @@ interface DistanceLinesProps {
   config: DistanceConfig;
   /** Calculated distance results */
   distances: DistanceResult[];
+  /** Current highlight state */
+  highlightState?: HighlightState;
+  /** Callback when a line is clicked */
+  onLineClick?: (from: string, to: string) => void;
 }
 
 /**
@@ -29,38 +37,83 @@ const generateCurvedPath = (
   segments: number = 20
 ): [number, number][] => {
   const points: [number, number][] = [];
-  
+
   // Calculate midpoint
   const midLat = (fromLat + toLat) / 2;
   const midLon = (fromLon + toLon) / 2;
-  
+
   // Calculate distance for arc height
   const distance = Math.sqrt(
     Math.pow(toLat - fromLat, 2) + Math.pow(toLon - fromLon, 2)
   );
-  
+
   // Calculate perpendicular offset for control point (creates the arc)
   const offsetFactor = 0.08; // Adjust this for more/less curve (subtle arc)
   const dx = toLon - fromLon;
   const dy = toLat - fromLat;
-  
+
   // Control point perpendicular to the line
   const controlLat = midLat - dx * distance * offsetFactor;
   const controlLon = midLon + dy * distance * offsetFactor;
-  
+
   // Generate points along quadratic bezier curve
   for (let i = 0; i <= segments; i++) {
     const t = i / segments;
     const t1 = 1 - t;
-    
+
     // Quadratic bezier formula: B(t) = (1-t)²P0 + 2(1-t)tP1 + t²P2
     const lat = t1 * t1 * fromLat + 2 * t1 * t * controlLat + t * t * toLat;
     const lon = t1 * t1 * fromLon + 2 * t1 * t * controlLon + t * t * toLon;
-    
+
     points.push([lat, lon]);
   }
-  
+
   return points;
+};
+
+/**
+ * Check if a line should be highlighted
+ */
+const isLineHighlighted = (
+  from: string,
+  to: string,
+  highlightState?: HighlightState
+): boolean => {
+  if (!highlightState) return false;
+
+  // Highlight if this specific line is selected
+  if (highlightState.highlightedLine) {
+    const { from: hFrom, to: hTo } = highlightState.highlightedLine;
+    return (from === hFrom && to === hTo) || (from === hTo && to === hFrom);
+  }
+
+  // Highlight if either endpoint matches the highlighted geohash
+  if (highlightState.highlightedGeohash) {
+    return (
+      from === highlightState.highlightedGeohash ||
+      to === highlightState.highlightedGeohash
+    );
+  }
+
+  return false;
+};
+
+/**
+ * Check if a line should be dimmed
+ */
+const isLineDimmed = (
+  from: string,
+  to: string,
+  highlightState?: HighlightState
+): boolean => {
+  if (!highlightState) return false;
+
+  // If something is highlighted, dim everything else
+  if (highlightState.highlightedLine || highlightState.highlightedGeohash) {
+    return !isLineHighlighted(from, to, highlightState);
+  }
+
+  return false;
 };
 
 /**
@@ -71,6 +124,8 @@ const DistanceLines: React.FC<DistanceLinesProps> = ({
   geohashes,
   config,
   distances,
+  highlightState,
+  onLineClick,
 }) => {
   // Memoize line generation to prevent unnecessary re-renders
   const lines = useMemo(() => {
@@ -85,9 +140,6 @@ const DistanceLines: React.FC<DistanceLinesProps> = ({
       const fromCentroid = calculateCentroid(from.boundingBox);
       const toCentroid = calculateCentroid(to.boundingBox);
 
-      // Create unique key for each line
-      const key = `${from.geohash}-${to.geohash}`;
-
       // Generate curved path between points
       const curvedPath = generateCurvedPath(
         fromCentroid.lat,
@@ -97,31 +149,69 @@ const DistanceLines: React.FC<DistanceLinesProps> = ({
       );
 
       // Format distance for display
-      const distanceText = distance >= 1 
-        ? `${distance.toFixed(2)} km` 
-        : `${(distance * 1000).toFixed(0)} m`;
+      const distanceText =
+        distance >= 1
+          ? `${distance.toFixed(2)} km`
+          : `${(distance * 1000).toFixed(0)} m`;
+
+      // Determine if this line is highlighted or dimmed
+      const highlighted = isLineHighlighted(
+        from.geohash,
+        to.geohash,
+        highlightState
+      );
+      const dimmed = isLineDimmed(from.geohash, to.geohash, highlightState);
+
+      // Create unique key for each line (include highlight state to force re-render)
+      const highlightKey = highlighted
+        ? "-highlighted"
+        : dimmed
+          ? "-dimmed"
+          : "";
+      const key = `${from.geohash}-${to.geohash}${highlightKey}`;
+
+      // Dynamic styling based on highlight state
+      const lineColor = highlighted ? "#10B981" : "#FF6B35";
+      const lineWeight = highlighted ? 5 : 3;
+      const lineOpacity = dimmed ? 0.2 : highlighted ? 1 : 0.85;
 
       // Render Polyline with curved path, enhanced styling, and distance label
       return (
         <Polyline
           key={key}
           positions={curvedPath}
-          color="#FF6B35"
-          weight={3}
-          opacity={0.85}
+          color={lineColor}
+          weight={lineWeight}
+          opacity={lineOpacity}
           smoothFactor={1}
+          eventHandlers={{
+            click: () => {
+              if (onLineClick) {
+                onLineClick(from.geohash, to.geohash);
+              }
+            },
+          }}
+          className={
+            highlighted
+              ? "distance-line-highlighted"
+              : dimmed
+                ? "distance-line-dimmed"
+                : "distance-line"
+          }
         >
-          <Tooltip 
-            permanent 
-            direction="center" 
-            className="distance-label"
+          <Tooltip
+            permanent
+            direction="center"
+            className={`distance-label ${highlighted ? "distance-label-highlighted" : dimmed ? "distance-label-dimmed" : ""}`}
           >
-            {distanceText}
+            {highlighted
+              ? `${from.geohash} ↔ ${to.geohash}: ${distanceText}`
+              : distanceText}
           </Tooltip>
         </Polyline>
       );
     });
-  }, [distances]);
+  }, [distances, highlightState, onLineClick]);
 
   return <>{lines}</>;
 };

@@ -1,10 +1,10 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import AdvancedOptions from '../AdvancedOptions';
-import DistanceAnalysis from './DistanceAnalysis';
-import DistanceConfig from './DistanceConfig';
-import { DistanceConfig as DistanceConfigType } from './utils/distanceTypes';
-import Geohash from '../../../GeohashMap/model/Geohash';
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import AdvancedOptions from "../AdvancedOptions";
+import DistanceAnalysis from "./DistanceAnalysis";
+import DistanceConfig from "./DistanceConfig";
+import { DistanceConfig as DistanceConfigType } from "./utils/distanceTypes";
+import Geohash from "../../../GeohashMap/model/Geohash";
 
 const mockGeohash = (geohash: string): Geohash => ({
   geohash,
@@ -14,9 +14,9 @@ const mockGeohash = (geohash: string): Geohash => ({
   ],
 });
 
-describe('Accessibility Tests', () => {
-  describe('Keyboard navigation', () => {
-    test('AdvancedOptions toggle is keyboard accessible', () => {
+describe("Accessibility Tests", () => {
+  describe("Keyboard navigation", () => {
+    test("AdvancedOptions toggle is keyboard accessible", () => {
       const onToggle = jest.fn();
 
       render(
@@ -25,25 +25,25 @@ describe('Accessibility Tests', () => {
         </AdvancedOptions>
       );
 
-      const button = screen.getByRole('button');
+      const button = screen.getByRole("button");
 
       // Test Enter key
-      fireEvent.keyDown(button, { key: 'Enter' });
+      fireEvent.keyDown(button, { key: "Enter" });
       expect(onToggle).toHaveBeenCalledTimes(1);
 
       // Test Space key
-      fireEvent.keyDown(button, { key: ' ' });
+      fireEvent.keyDown(button, { key: " " });
       expect(onToggle).toHaveBeenCalledTimes(2);
     });
 
-    test('DistanceAnalysis toggle is keyboard accessible', () => {
+    test("DistanceAnalysis toggle is keyboard accessible", () => {
       const onConfigChange = jest.fn();
-      const geohashes = [mockGeohash('abc'), mockGeohash('def')];
+      const geohashes = [mockGeohash("abc"), mockGeohash("def")];
       const config: DistanceConfigType = {
         enabled: false,
-        mode: 'reference',
+        mode: "reference",
         referenceGeohash: null,
-        units: 'km',
+        units: "km",
       };
 
       render(
@@ -55,19 +55,19 @@ describe('Accessibility Tests', () => {
         />
       );
 
-      const checkbox = screen.getByRole('checkbox');
+      const checkbox = screen.getByRole("checkbox");
       checkbox.focus();
       expect(document.activeElement).toBe(checkbox);
     });
 
-    test('tab order is logical', () => {
+    test("tab order is logical", () => {
       const onConfigChange = jest.fn();
-      const geohashes = [mockGeohash('abc'), mockGeohash('def')];
+      const geohashes = [mockGeohash("abc"), mockGeohash("def")];
       const config: DistanceConfigType = {
         enabled: true,
-        mode: 'reference',
-        referenceGeohash: 'abc',
-        units: 'km',
+        mode: "reference",
+        referenceGeohash: "abc",
+        units: "km",
       };
 
       render(
@@ -85,14 +85,14 @@ describe('Accessibility Tests', () => {
       expect(screen.getByText(/Miles/i)).toBeInTheDocument();
     });
 
-    test('disabled state is properly communicated', () => {
+    test("disabled state is properly communicated", () => {
       const onConfigChange = jest.fn();
-      const geohashes = [mockGeohash('abc'), mockGeohash('def')];
+      const geohashes = [mockGeohash("abc"), mockGeohash("def")];
       const config: DistanceConfigType = {
         enabled: false,
-        mode: 'reference',
+        mode: "reference",
         referenceGeohash: null,
-        units: 'km',
+        units: "km",
       };
 
       render(
@@ -103,19 +103,19 @@ describe('Accessibility Tests', () => {
         />
       );
 
-      const modeSelect = screen.getAllByRole('combobox')[0];
+      const modeSelect = screen.getAllByRole("combobox")[0];
       modeSelect.focus();
       expect(document.activeElement).toBe(modeSelect);
     });
 
-    test('focus moves correctly between elements', () => {
+    test("focus moves correctly between elements", () => {
       const onConfigChange = jest.fn();
-      const geohashes = [mockGeohash('abc'), mockGeohash('def')];
+      const geohashes = [mockGeohash("abc"), mockGeohash("def")];
       const config: DistanceConfigType = {
         enabled: true,
-        mode: 'reference',
-        referenceGeohash: 'abc',
-        units: 'km',
+        mode: "reference",
+        referenceGeohash: "abc",
+        units: "km",
       };
 
       render(
@@ -131,14 +131,18 @@ describe('Accessibility Tests', () => {
       expect(infoText).toBeInTheDocument();
     });
 
-    test('mode descriptions are clear', () => {
+    test("mode descriptions are clear", () => {
       const onConfigChange = jest.fn();
-      const geohashes = [mockGeohash('abc'), mockGeohash('def'), mockGeohash('ghi')];
+      const geohashes = [
+        mockGeohash("abc"),
+        mockGeohash("def"),
+        mockGeohash("ghi"),
+      ];
       const config: DistanceConfigType = {
         enabled: true,
-        mode: 'consecutive',
+        mode: "consecutive",
         referenceGeohash: null,
-        units: 'km'
+        units: "km",
       };
 
       render(

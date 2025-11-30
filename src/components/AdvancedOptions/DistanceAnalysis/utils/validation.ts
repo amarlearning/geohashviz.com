@@ -1,5 +1,5 @@
-import Geohash from '../../../../GeohashMap/model/Geohash';
-import { DistanceConfig } from './distanceTypes';
+import Geohash from "../../../../GeohashMap/model/Geohash";
+import { DistanceConfig } from "./distanceTypes";
 
 /**
  * Validation result interface
@@ -15,11 +15,13 @@ export interface ValidationResult {
  * @param geohashes Array of geohashes
  * @returns Validation result
  */
-export function validateMinimumGeohashCount(geohashes: Geohash[]): ValidationResult {
+export function validateMinimumGeohashCount(
+  geohashes: Geohash[]
+): ValidationResult {
   if (geohashes.length < 2) {
     return {
       isValid: false,
-      error: 'Need at least 2 valid geohashes for distance analysis',
+      error: "Need at least 2 valid geohashes for distance analysis",
     };
   }
   return { isValid: true };
@@ -38,11 +40,11 @@ export function validateReferenceGeohash(
   if (!referenceGeohash) {
     return {
       isValid: false,
-      error: 'Reference geohash is required for reference mode',
+      error: "Reference geohash is required for reference mode",
     };
   }
 
-  const exists = geohashes.some(g => g.geohash === referenceGeohash);
+  const exists = geohashes.some((g) => g.geohash === referenceGeohash);
   if (!exists) {
     return {
       isValid: false,
@@ -71,32 +73,32 @@ export function validateModeRequirements(
 
   // Mode-specific validation
   switch (config.mode) {
-    case 'reference':
+    case "reference":
       return validateReferenceGeohash(config.referenceGeohash, geohashes);
 
-    case 'consecutive':
+    case "consecutive":
       if (geohashes.length < 2) {
         return {
           isValid: false,
-          error: 'Need at least 2 geohashes for consecutive mode',
+          error: "Need at least 2 geohashes for consecutive mode",
         };
       }
       return { isValid: true };
 
-    case 'nearest':
+    case "nearest":
       if (geohashes.length < 2) {
         return {
           isValid: false,
-          error: 'Need at least 2 geohashes for nearest neighbor mode',
+          error: "Need at least 2 geohashes for nearest neighbor mode",
         };
       }
       return { isValid: true };
 
-    case 'allPairs':
+    case "allPairs":
       if (geohashes.length > 20) {
         return {
           isValid: false,
-          error: 'Too many geohashes for all pairs mode (max 20)',
+          error: "Too many geohashes for all pairs mode (max 20)",
         };
       }
       if (geohashes.length > 10) {
@@ -125,7 +127,7 @@ export function validatePerformance(geohashes: Geohash[]): ValidationResult {
   if (geohashes.length > 50) {
     return {
       isValid: true,
-      warning: '⚠️ Large dataset may impact performance',
+      warning: "⚠️ Large dataset may impact performance",
     };
   }
   return { isValid: true };

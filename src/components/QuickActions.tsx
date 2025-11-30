@@ -1,5 +1,5 @@
-import React from 'react';
-import './QuickActions.css';
+import React from "react";
+import "./QuickActions.css";
 
 interface QuickActionsProps {
   onClear: () => void;
@@ -7,27 +7,31 @@ interface QuickActionsProps {
   onExport?: () => void;
 }
 
-const QuickActions: React.FC<QuickActionsProps> = ({ onClear, onSample, onExport }) => {
+const QuickActions: React.FC<QuickActionsProps> = ({
+  onClear,
+  onSample,
+  onExport,
+}) => {
   return (
     <div className="quick-actions">
-      <button 
+      <button
         className="quick-action-btn sample-btn"
         onClick={onSample}
         title="Load sample geohashes"
       >
         📍 Sample
       </button>
-      
-      <button 
+
+      <button
         className="quick-action-btn clear-btn"
         onClick={onClear}
         title="Clear all geohashes"
       >
         🗑️ Clear
       </button>
-      
+
       {onExport && (
-        <button 
+        <button
           className="quick-action-btn export-btn"
           onClick={onExport}
           title="Export geohashes"
