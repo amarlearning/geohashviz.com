@@ -1,363 +1,87 @@
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState, useEffect, useRef, useMemo } from "react";
-
-import GeohashMap from "./GeohashMap/GeohashMap";
-import Geohash from "./GeohashMap/model/Geohash";
-import { createGeohashObjects } from "./Algorithms/geohash";
-import GeohashInput from "./GeohashInput/GeohashInput";
-import InfoButton from "./InfoButton/InfoButton";
-import StatusBar from "./components/StatusBar";
 import {
-  DistanceConfig,
-  HighlightState,
-} from "./components/AdvancedOptions/DistanceAnalysis/utils/distanceTypes";
-import {
-  calculateDistances,
-  clearDistanceCache,
-} from "./components/AdvancedOptions/DistanceAnalysis/utils/distanceCalculator";
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
+import { Navbar, Nav, Container } from "react-bootstrap";
+import Home from "./pages/Home";
+import About from "./pages/About";
 
-function App() {
-  // Get geohashes from URL if present
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlGeohashes = urlParams.get("view");
-  const defaultGeohashStr = urlGeohashes
-    ? urlGeohashes.split(",").join("\n")
-    : "gct\ngcp";
+const GitHubIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+  </svg>
+);
 
-  // Parse geohash strings (don't filter here, let StatusBar handle validation)
-  const parseGeohashes = (input: string): string[] => {
-    const geohashes: string[] = [];
-
-    input.split("\n").forEach((geohash) => {
-      const trimmedGeohash = geohash.trim();
-      if (trimmedGeohash.length > 0) {
-        geohashes.push(trimmedGeohash);
-      }
-    });
-
-    return geohashes;
-  };
-
-  const [isLoading, setIsLoading] = useState(false);
-  const mapRef = useRef<any>(null);
-
-  // Initialize geohashes state first (needed by other hooks)
-  const [geohashes, setGeohashes] = useState(() => {
-    const inputGeohashes = parseGeohashes(defaultGeohashStr);
-    const result = createGeohashObjects(inputGeohashes);
-    return result.valid;
-  });
-
-  const [allGeohashes, setAllGeohashes] = useState(() => {
-    const inputGeohashes = parseGeohashes(defaultGeohashStr);
-    const result = createGeohashObjects(inputGeohashes);
-    return result.all;
-  });
-
-  // Distance analysis state
-  const [distanceConfig, setDistanceConfig] = useState<DistanceConfig>({
-    enabled: false,
-    mode: "reference",
-    referenceGeohash: null,
-    units: "km",
-  });
-
-  // Advanced options state
-  const [advancedOptionsExpanded, setAdvancedOptionsExpanded] = useState(false);
-
-  // Highlight state for interactive distance visualization
-  const [highlightState, setHighlightState] = useState<HighlightState>({
-    highlightedGeohash: null,
-    highlightedLine: null,
-  });
-
-  // Load distance config from localStorage on mount
-  useEffect(() => {
-    const savedConfig = localStorage.getItem("geohashviz_distance_config");
-    if (savedConfig) {
-      try {
-        const parsed = JSON.parse(savedConfig);
-        setDistanceConfig(parsed);
-      } catch (error) {
-        console.error(
-          "Error loading distance config from localStorage:",
-          error
-        );
-      }
-    }
-
-    const savedExpanded = localStorage.getItem(
-      "geohashviz_advanced_options_expanded"
-    );
-    if (savedExpanded) {
-      try {
-        setAdvancedOptionsExpanded(JSON.parse(savedExpanded));
-      } catch (error) {
-        console.error(
-          "Error loading advanced options state from localStorage:",
-          error
-        );
-      }
-    }
-  }, []);
-
-  // Save distance config to localStorage when it changes
-  useEffect(() => {
-    localStorage.setItem(
-      "geohashviz_distance_config",
-      JSON.stringify(distanceConfig)
-    );
-  }, [distanceConfig]);
-
-  // Save advanced options state to localStorage when it changes
-  useEffect(() => {
-    localStorage.setItem(
-      "geohashviz_advanced_options_expanded",
-      JSON.stringify(advancedOptionsExpanded)
-    );
-  }, [advancedOptionsExpanded]);
-
-  // Calculate distances when config or geohashes change
-  const distances = useMemo(() => {
-    if (!distanceConfig.enabled) {
-      return [];
-    }
-
-    try {
-      return calculateDistances(geohashes, distanceConfig);
-    } catch (error) {
-      console.error("Error calculating distances:", error);
-      return [];
-    }
-  }, [geohashes, distanceConfig]);
-
-  // Clear distance cache when geohashes change
-  useEffect(() => {
-    clearDistanceCache();
-  }, [geohashes]);
-
-  // Clear highlight state when distance config is disabled or geohashes change
-  useEffect(() => {
-    if (!distanceConfig.enabled) {
-      setHighlightState({
-        highlightedGeohash: null,
-        highlightedLine: null,
-      });
-    }
-  }, [distanceConfig.enabled, geohashes]);
-
-  // Handle geohash click - highlight all lines connected to it
-  const handleGeohashClick = (geohash: string) => {
-    if (!distanceConfig.enabled) return;
-
-    // Toggle: if already highlighted, clear it; otherwise set it
-    if (highlightState.highlightedGeohash === geohash) {
-      setHighlightState({
-        highlightedGeohash: null,
-        highlightedLine: null,
-      });
-    } else {
-      setHighlightState({
-        highlightedGeohash: geohash,
-        highlightedLine: null,
-      });
-    }
-  };
-
-  // Handle line click - highlight the two connected geohashes
-  const handleLineClick = (from: string, to: string) => {
-    if (!distanceConfig.enabled) return;
-
-    // Toggle: if this line is already highlighted, clear it; otherwise set it
-    if (
-      highlightState.highlightedLine &&
-      ((highlightState.highlightedLine.from === from &&
-        highlightState.highlightedLine.to === to) ||
-        (highlightState.highlightedLine.from === to &&
-          highlightState.highlightedLine.to === from))
-    ) {
-      setHighlightState({
-        highlightedGeohash: null,
-        highlightedLine: null,
-      });
-    } else {
-      setHighlightState({
-        highlightedGeohash: null,
-        highlightedLine: { from, to },
-      });
-    }
-  };
-
-  // Handle distance config changes
-  const handleDistanceConfigChange = (newConfig: DistanceConfig) => {
-    // Auto-select first geohash as reference if needed
-    if (
-      newConfig.mode === "reference" &&
-      !newConfig.referenceGeohash &&
-      geohashes.length > 0
-    ) {
-      newConfig = {
-        ...newConfig,
-        referenceGeohash: geohashes[0].geohash,
-      };
-    }
-
-    // If current reference geohash is not in valid geohashes, auto-select first
-    if (newConfig.mode === "reference" && newConfig.referenceGeohash) {
-      const referenceExists = geohashes.some(
-        (g) => g.geohash === newConfig.referenceGeohash
-      );
-      if (!referenceExists && geohashes.length > 0) {
-        newConfig = {
-          ...newConfig,
-          referenceGeohash: geohashes[0].geohash,
-        };
-      }
-    }
-
-    setDistanceConfig(newConfig);
-  };
-
-  // Zoom control functions
-  const handleZoomIn = () => {
-    if (mapRef.current) {
-      mapRef.current.zoomIn();
-    }
-  };
-
-  const handleZoomOut = () => {
-    if (mapRef.current) {
-      mapRef.current.zoomOut();
-    }
-  };
-
-  const handleFitBounds = () => {
-    if (mapRef.current) {
-      mapRef.current.fitBounds();
-    }
-  };
-
-  // Process geohash input and convert to Geohash objects
-  const handleSubmit = (value: string): Geohash[] => {
-    setIsLoading(true);
-    const inputGeohashes = parseGeohashes(value);
-    const result = createGeohashObjects(inputGeohashes);
-    setAllGeohashes(result.all); // Update all geohashes for StatusBar
-    setTimeout(() => setIsLoading(false), 300); // Brief loading state for UX
-    return result.valid; // Return only valid geohashes for map
-  };
-
-  // Update URL when geohashes change
-  useEffect(() => {
-    if (geohashes.length > 0) {
-      const geohashStr = geohashes.map((g) => g.geohash).join(",");
-      window.history.replaceState(null, "", `?view=${geohashStr}`);
-    }
-  }, [geohashes]);
-
-  // Keyboard shortcuts
-  useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      // Shift+F: Zoom to fit
-      if (event.shiftKey && event.key.toLowerCase() === "f") {
-        event.preventDefault();
-        if (mapRef.current && geohashes.length > 0) {
-          mapRef.current.fitBounds();
-        }
-      }
-
-      // ESC: Clear highlights
-      if (event.key === "Escape") {
-        if (
-          highlightState.highlightedGeohash ||
-          highlightState.highlightedLine
-        ) {
-          event.preventDefault();
-          setHighlightState({
-            highlightedGeohash: null,
-            highlightedLine: null,
-          });
-        }
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyPress);
-    return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [geohashes, highlightState]);
+function AppContent() {
+  const location = useLocation();
 
   return (
     <div className="app-container">
-      <header className="app-header">
-        <div className="app-header-content">
-          <div className="app-logo">🗺️</div>
-          <div>
-            <h1 className="app-title">GeohashViz</h1>
-            <p className="app-subtitle">
-              Interactive geohash visualization tool
-            </p>
-          </div>
-        </div>
-        <div className="app-header-stats">
-          {isLoading && (
-            <div className="app-stat">
-              <div className="app-stat-value">⚡</div>
-              <div className="app-stat-label">Processing</div>
+      <Navbar expand="lg" className="app-navbar" fixed="top">
+        <Container fluid className="px-4">
+          <Navbar.Brand as={Link} to="/" className="navbar-brand-custom">
+            <div className="app-logo">🗺️</div>
+            <div className="brand-text">
+              <div className="app-title">GeohashViz</div>
+              <div className="app-subtitle">
+                Interactive geohash visualization tool
+              </div>
             </div>
-          )}
-          <InfoButton />
-        </div>
-      </header>
-      <GeohashInput
-        onSubmit={(value) => setGeohashes(handleSubmit(value))}
-        defaultGeohashStr={defaultGeohashStr}
-        onZoomIn={handleZoomIn}
-        onZoomOut={handleZoomOut}
-        onFitBounds={handleFitBounds}
-        advancedOptionsExpanded={advancedOptionsExpanded}
-        onAdvancedOptionsToggle={() =>
-          setAdvancedOptionsExpanded(!advancedOptionsExpanded)
-        }
-        distanceConfig={distanceConfig}
-        onDistanceConfigChange={handleDistanceConfigChange}
-        validGeohashes={geohashes}
-      />
-      {/* Highlight indicator */}
-      {distanceConfig.enabled &&
-        (highlightState.highlightedGeohash ||
-          highlightState.highlightedLine) && (
-          <div className="highlight-indicator">
-            <span className="highlight-indicator-text">
-              {highlightState.highlightedGeohash
-                ? `Highlighting: ${highlightState.highlightedGeohash}`
-                : `Highlighting: ${highlightState.highlightedLine?.from} ↔ ${highlightState.highlightedLine?.to}`}
-            </span>
-            <button
-              className="highlight-clear-btn"
-              onClick={() =>
-                setHighlightState({
-                  highlightedGeohash: null,
-                  highlightedLine: null,
-                })
-              }
-              aria-label="Clear highlight"
-            >
-              ✕
-            </button>
-          </div>
-        )}
-      <GeohashMap
-        geohashes={geohashes}
-        ref={mapRef}
-        distanceConfig={distanceConfig}
-        distances={distances}
-        highlightState={highlightState}
-        onGeohashClick={handleGeohashClick}
-        onLineClick={handleLineClick}
-      />
-      <StatusBar geohashes={allGeohashes} isLoading={isLoading} />
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto align-items-center">
+              <Nav.Link
+                as={Link}
+                to="/"
+                className={location.pathname === "/" ? "active" : ""}
+              >
+                Home
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/about"
+                className={location.pathname === "/about" ? "active" : ""}
+              >
+                About
+              </Nav.Link>
+              <Nav.Link
+                href="https://github.com/amarlearning/geohashviz.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="github-link"
+              >
+                <GitHubIcon />
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 

@@ -35,26 +35,16 @@
     -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
 }
 
-/* Header area - sunny morning design */
-.app-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: var(--morning-gradient);
-  color: white;
-  padding: 0.75rem 2rem;
-  z-index: 1001;
-  box-shadow: 0 8px 32px rgba(30, 64, 175, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+/* Bootstrap Navbar Customization */
+.app-navbar {
+  background: var(--morning-gradient) !important;
+  padding: 0.75rem 0;
+  box-shadow: 0 2px 12px rgba(30, 64, 175, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 70px;
 }
 
-.app-header::before {
+.app-navbar::before {
   content: "";
   position: absolute;
   top: 0;
@@ -64,14 +54,75 @@
   background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
     repeat;
   opacity: 0.3;
+  pointer-events: none;
 }
 
-.app-header-content {
-  display: flex;
+.navbar-brand-custom {
+  display: flex !important;
   align-items: center;
-  gap: 1rem;
+  gap: 0.875rem;
+  text-decoration: none;
+  color: white !important;
   position: relative;
   z-index: 1;
+}
+
+.navbar-brand-custom:hover {
+  color: white !important;
+  opacity: 0.9;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+  margin: 0 0.25rem;
+}
+
+.app-navbar .nav-link:hover {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+.app-navbar .nav-link.active {
+  color: white !important;
+  font-weight: 500;
+}
+
+.app-navbar .github-link {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem !important;
+  margin-left: 0.5rem;
+}
+
+.app-navbar .github-link svg {
+  display: block;
+}
+
+.app-navbar .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.app-navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.app-navbar .navbar-toggler:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
 }
 
 .app-logo {
@@ -212,14 +263,28 @@
 }
 
 /* Improved responsive design */
-@media (max-width: 768px) {
-  .app-header {
-    padding: 0.5rem 1rem;
-    height: 50px;
+@media (max-width: 991px) {
+  .app-navbar .navbar-collapse {
+    background: rgba(30, 64, 175, 0.95);
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
   }
 
-  .app-header-content {
-    gap: 0.75rem;
+  .app-navbar .nav-link {
+    padding: 0.75rem 1rem !important;
+  }
+
+  .app-navbar .github-link {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-navbar {
+    min-height: 60px;
+    padding: 0.5rem 0;
   }
 
   .app-logo {
@@ -236,24 +301,12 @@
     font-size: 0.7rem;
   }
 
-  .app-header-stats {
-    gap: 1rem;
-  }
-
-  .app-stat-value {
-    font-size: 1rem;
-  }
-
-  .app-stat-label {
-    font-size: 0.65rem;
-  }
-
   .leaflet-container {
-    padding-top: 50px;
+    padding-top: 60px;
   }
 
   .highlight-indicator {
-    top: 60px;
+    top: 70px;
     font-size: 12px;
     padding: 8px 12px;
   }
