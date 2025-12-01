@@ -11,6 +11,10 @@ import {
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import BlogList from "./pages/blog/BlogList";
+import Geohash101 from "./pages/blog/Geohash101";
+import RealWorldUseCases from "./pages/blog/RealWorldUseCases";
+import GeohashPrecision from "./pages/blog/GeohashPrecision";
 
 const GitHubIcon = () => (
   <svg
@@ -58,6 +62,15 @@ function AppContent() {
                 About
               </Nav.Link>
               <Nav.Link
+                as={Link}
+                to="/blogs"
+                className={
+                  location.pathname.startsWith("/blogs") ? "active" : ""
+                }
+              >
+                Blog
+              </Nav.Link>
+              <Nav.Link
                 href="https://github.com/amarlearning/geohashviz.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -72,6 +85,16 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/blogs" element={<BlogList />} />
+        <Route path="/blogs/geohash-101" element={<Geohash101 />} />
+        <Route
+          path="/blogs/real-world-geohash-use-cases"
+          element={<RealWorldUseCases />}
+        />
+        <Route
+          path="/blogs/geohash-precision-guide"
+          element={<GeohashPrecision />}
+        />
       </Routes>
     </div>
   );

@@ -1,0 +1,91 @@
+import { Container, Row, Col, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import "./Blog.css";
+
+const BlogList = () => {
+  const blogPosts = [
+    {
+      slug: "geohash-101",
+      title: "Geohash 101: Understanding Location Encoding",
+      excerpt:
+        "Learn the fundamentals of geohashing, how it works, and why it's essential for modern location-based applications.",
+      readTime: "8 min read",
+      date: "December 2024",
+      category: "Fundamentals",
+    },
+    {
+      slug: "geohash-precision-guide",
+      title: "Comparing Geohash Precision: A Complete Guide",
+      excerpt:
+        "Explore different geohash lengths and their precision levels. Learn how to choose the right precision for your specific use case.",
+      readTime: "7 min read",
+      date: "December 2024",
+      category: "Guide",
+    },
+    {
+      slug: "real-world-geohash-use-cases",
+      title: "Real-World Geohash Use Cases",
+      excerpt:
+        "Explore practical applications of geohashes in ride-sharing, delivery services, gaming, and more.",
+      readTime: "6 min read",
+      date: "December 2024",
+      category: "Applications",
+    },
+  ];
+
+  return (
+    <div className="blog-page">
+      {/* Hero Section */}
+      <section className="blog-hero">
+        <Container>
+          <Row className="justify-content-center text-center">
+            <Col lg={8}>
+              <h1 className="blog-hero-title">Knowledge Base</h1>
+              <p className="blog-hero-subtitle">
+                Learn everything about geohashes, location encoding, and spatial
+                data visualization
+              </p>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+      {/* Blog Posts */}
+      <Container className="blog-content">
+        <Row className="g-4">
+          {blogPosts.map((post) => (
+            <Col md={6} key={post.slug}>
+              <Card className="blog-card h-100">
+                <Card.Body className="d-flex flex-column">
+                  <div className="blog-meta">
+                    <span className="blog-category">{post.category}</span>
+                    <span className="blog-date">{post.date}</span>
+                  </div>
+                  <Card.Title className="blog-title">
+                    <Link to={`/blogs/${post.slug}`} className="blog-link">
+                      {post.title}
+                    </Link>
+                  </Card.Title>
+                  <Card.Text className="blog-excerpt">{post.excerpt}</Card.Text>
+                  <div className="mt-auto">
+                    <div className="blog-footer">
+                      <span className="read-time">{post.readTime}</span>
+                      <Link
+                        to={`/blogs/${post.slug}`}
+                        className="read-more-btn"
+                      >
+                        Read More →
+                      </Link>
+                    </div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </div>
+  );
+};
+
+export default BlogList;
