@@ -23,6 +23,24 @@ const BlogList = () => {
       category: "Guide",
     },
     {
+      slug: "optimizing-geo-queries",
+      title: "Optimizing Geo Queries with Geohashes",
+      excerpt:
+        "Learn how geohashes accelerate spatial queries in databases like Firestore and Elasticsearch with practical examples and code.",
+      readTime: "8 min read",
+      date: "December 2024",
+      category: "Performance",
+    },
+    {
+      slug: "building-geohashviz",
+      title: "Behind the Scenes: Building GeohashViz",
+      excerpt:
+        "Insights into our tech stack, design decisions, and the engineering challenges of building a real-time geohash visualization platform.",
+      readTime: "9 min read",
+      date: "December 2024",
+      category: "Engineering",
+    },
+    {
       slug: "real-world-geohash-use-cases",
       title: "Real-World Geohash Use Cases",
       excerpt:

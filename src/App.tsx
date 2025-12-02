@@ -15,6 +15,8 @@ import BlogList from "./pages/blog/BlogList";
 import Geohash101 from "./pages/blog/Geohash101";
 import RealWorldUseCases from "./pages/blog/RealWorldUseCases";
 import GeohashPrecision from "./pages/blog/GeohashPrecision";
+import OptimizingGeoQueries from "./pages/blog/OptimizingGeoQueries";
+import BuildingGeohashViz from "./pages/blog/BuildingGeohashViz";
 
 const GitHubIcon = () => (
   <svg
@@ -94,6 +96,14 @@ function AppContent() {
         <Route
           path="/blogs/geohash-precision-guide"
           element={<GeohashPrecision />}
+        />
+        <Route
+          path="/blogs/optimizing-geo-queries"
+          element={<OptimizingGeoQueries />}
+        />
+        <Route
+          path="/blogs/building-geohashviz"
+          element={<BuildingGeohashViz />}
         />
       </Routes>
     </div>
