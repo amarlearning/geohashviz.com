@@ -87,8 +87,8 @@ const GeohashMap = forwardRef<GeohashMapRef, LeafletContainerProps>(
         ref={mapInstanceRef}
       >
         <TileLayer
-          attribution="Map data ©2024 Google"
-          url="https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}"
+          attribution="© OpenStreetMap contributors"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           className="map-tiles"
         />
         <BoundsFitter geohashes={geohashes} />
