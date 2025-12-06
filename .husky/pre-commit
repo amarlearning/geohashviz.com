@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 echo "🔍 Running pre-commit checks..."
 
 # Run prettier on staged files only (fast)
@@ -19,7 +16,7 @@ npx tsc --noEmit || {
 
 # Run tests (can be slow, but necessary)
 echo "🧪 Running tests..."
-CI=true npm test -- --watchAll=false --passWithNoTests || {
+CI=true npm test -- --run --passWithNoTests || {
   echo "❌ Tests failed."
   exit 1
 }

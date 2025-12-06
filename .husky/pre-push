@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 echo "🚀 Running pre-push checks (full CI simulation)..."
 
 # Run all formatting
@@ -19,7 +16,7 @@ npx tsc --noEmit || {
 
 # Run all tests
 echo "🧪 Running all tests..."
-CI=true npm test -- --watchAll=false --passWithNoTests || {
+CI=true npm test -- --run --passWithNoTests || {
   echo "❌ Tests failed."
   exit 1
 }
