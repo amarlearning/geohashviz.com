@@ -6,7 +6,7 @@ import {
   DistanceResult,
   HighlightState,
 } from "./utils/distanceTypes";
-import { calculateCentroid } from "./utils/distanceCalculator";
+import { calculateCentroid, formatDistance } from "./utils/distanceCalculator";
 import "./DistanceLines.css";
 
 /**
@@ -148,11 +148,8 @@ const DistanceLines: React.FC<DistanceLinesProps> = ({
         toCentroid.lon
       );
 
-      // Format distance for display
-      const distanceText =
-        distance >= 1
-          ? `${distance.toFixed(2)} km`
-          : `${(distance * 1000).toFixed(0)} m`;
+      // Format distance for display using selected units
+      const distanceText = formatDistance(distance, config.units);
 
       // Determine if this line is highlighted or dimmed
       const highlighted = isLineHighlighted(
@@ -211,7 +208,7 @@ const DistanceLines: React.FC<DistanceLinesProps> = ({
         </Polyline>
       );
     });
-  }, [distances, highlightState, onLineClick]);
+  }, [distances, highlightState, onLineClick, config.units]);
 
   return <>{lines}</>;
 };

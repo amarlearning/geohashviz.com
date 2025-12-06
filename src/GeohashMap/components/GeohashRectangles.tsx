@@ -21,15 +21,11 @@ interface GeohashRectanglesProps {
   onGeohashClick?: (geohash: string) => void;
 }
 
-/**
- * Generates a unique key for React elements
- * @param geohash - The geohash string
- * @param polygon - The type of element (rectangle/tooltip)
- * @returns A unique string key
- */
-const generateKey = (geohash: string, polygon: string): string => {
-  return `${geohash}-polygon-${(Math.random() + 1).toString(36).substring(10)}`;
-};
+// Use stable, deterministic keys to avoid unnecessary re-mounts
+const rectangleKey = (geohash: string, index: number): string =>
+  `${geohash}-rect-${index}`;
+const tooltipKey = (geohash: string, index: number): string =>
+  `${geohash}-tt-${index}`;
 
 /**
  * Gets tooltip content with optional distance information
@@ -177,7 +173,7 @@ const GeohashRectangles: React.FC<GeohashRectanglesProps> = ({
 }) => {
   const rectangles = useMemo(
     () =>
-      geohashes.map((geohash) => {
+      geohashes.map((geohash, index) => {
         const color = getRectangleColor(
           geohash,
           distanceConfig,
@@ -201,7 +197,7 @@ const GeohashRectangles: React.FC<GeohashRectanglesProps> = ({
             color={color}
             opacity={opacity}
             weight={weight}
-            key={generateKey(geohash.geohash, "rectangle")}
+            key={rectangleKey(geohash.geohash, index)}
             eventHandlers={{
               click: () => {
                 if (onGeohashClick && distanceConfig?.enabled) {
@@ -209,12 +205,12 @@ const GeohashRectangles: React.FC<GeohashRectanglesProps> = ({
                 }
               },
             }}
-            className={
+            className={`geohash-rectangle ${
               distanceConfig?.enabled ? "geohash-rectangle-clickable" : ""
-            }
+            }`}
           >
             <Tooltip
-              key={generateKey(geohash.geohash, "tooltip")}
+              key={tooltipKey(geohash.geohash, index)}
               permanent
               direction={"top"}
               className="custom-tooltip"

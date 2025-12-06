@@ -33,7 +33,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
     "type-check": "tsc --noEmit",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!your-module-name)/\"",
+    "test": "react-scripts test",
     "test:ci": "CI=true react-scripts test --watchAll=false --passWithNoTests",
     "validate": "npm run format:check && npm run type-check && npm run test:ci && npm run build",
     "eject": "react-scripts eject",

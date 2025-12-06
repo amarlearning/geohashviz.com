@@ -1287,6 +1287,216 @@
   margin-bottom: 4px;
 }
 
+/* Feature Steps */
+.feature-steps {
+  margin: 32px 0;
+}
+
+.feature-step {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.feature-step .step-number {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.feature-step .step-content h4 {
+  color: #0f172a;
+  margin-bottom: 8px;
+  font-size: 1.125rem;
+}
+
+.feature-step .step-content p {
+  color: #64748b;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Interaction Features */
+.interaction-features {
+  margin: 32px 0;
+}
+
+.interaction-item {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding: 24px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border-left: 4px solid #3b82f6;
+}
+
+.interaction-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.interaction-content h4 {
+  color: #0f172a;
+  margin-bottom: 8px;
+  font-size: 1.125rem;
+}
+
+.interaction-content p {
+  color: #64748b;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Calculation Modes */
+.calculation-modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 32px 0;
+}
+
+.mode-card {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.mode-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+  transform: translateY(-4px);
+}
+
+.mode-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.mode-icon {
+  font-size: 1.5rem;
+}
+
+.mode-card h4 {
+  color: #0f172a;
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.mode-card p {
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.mode-example {
+  background: #f0f9ff;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  border-left: 3px solid #3b82f6;
+}
+
+.mode-example strong {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+/* Example Sets */
+.example-set {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 24px;
+}
+
+.example-set h4 {
+  color: #0f172a;
+  margin-bottom: 16px;
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.example-codes {
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
+
+.example-codes code {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.example-codes span {
+  color: #64748b;
+}
+
+.example-set p {
+  color: #64748b;
+  font-size: 0.9375rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Roadmap Items */
+.roadmap-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 32px 0;
+}
+
+.roadmap-item {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-radius: 12px;
+  border: 1px solid #bbf7d0;
+}
+
+.roadmap-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.roadmap-content h4 {
+  color: #0f172a;
+  margin-bottom: 4px;
+  font-size: 1rem;
+}
+
+.roadmap-content p {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
 /* Responsive Design for New Elements */
 @media (max-width: 767px) {
   .precision-table {
@@ -1528,4 +1738,44 @@
   text-decoration: none;
 }
 
+/* Distance Analysis Example */
+.distance-analysis-example {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 16px 0 0;
+  border: 1px solid #e0f2fe;
+}
+
 /* Consolidated responsive styles are now in the first media query above */
+/* Section Header Styles */
+.section-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-size: 1.25rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive adjustments for section headers */
+@media (max-width: 767px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+  }
+}
